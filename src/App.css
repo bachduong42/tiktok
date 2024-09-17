@@ -36,29 +36,3 @@
     transform: rotate(360deg);
   }
 }
-.border-header {
-  box-shadow: rgb(0 0 0 / 12%) 0px 1px 1px;
-}
-.tooltip-text {
-  visibility: hidden;
-  width: 80px;
-  background-color: #34495e;
-  color: #fff;
-  text-align: center;
-  padding: 4px 6px;
-  border-radius: 4px;
-  position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.group:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-}
-.max-height-custom {
-  max-height: min(calc(100vh - 96px - 60px), 734px);
-}

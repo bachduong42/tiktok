@@ -10,6 +10,8 @@ import AccountItem from "~/components/AccountItem";
 import Button from "~/components/Button";
 import Menu from "~/components/Popper/Menu";
 import { AiFillTikTok } from "react-icons/ai";
+import { InboxIcon, UploadIcon } from "~/components/Icons";
+import Image from "~/components/Image";
 const MENU_ITEM = [
     {
         icon: <MdIcon.MdOutlineHome />,
@@ -145,11 +147,11 @@ function Header() {
                     {currentUser ? (
                         <>
                             <button className="flex gap-3 w-[110px] h-[36px] items-center justify-center border border-[#1618231f] hover:bg-[#16182308] cursor-pointer">
-                                <MdIcon.MdAdd className="text-[20px]" />
-                                <span>Upload</span>
+                                <UploadIcon></UploadIcon>
                             </button>
                             <Tippy content="Inbox">
-                                <button className="bg-transparent flex"><MdIcon.MdOutlineMarkUnreadChatAlt className="text-[30px] text-[#494a4e] cursor-pointer" /></button>
+
+                                <button className="bg-transparent flex"><InboxIcon className="cursor-pointer"></InboxIcon></button>
                             </Tippy>
                         </>
                     ) : (
@@ -161,7 +163,7 @@ function Header() {
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {
                             currentUser ? (
-                                <img src={ava} alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
+                                <Image src="" alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
                             ) : (
 
                                 <MdIcon.MdMoreVert className="flex text-[23px] text-[#5f6068] cursor-pointer" />
