@@ -64,3 +64,14 @@ code {
   src: url("/src/assets/fonts/TikTokDisplayFont-Bold.woff2");
   font-weight: 700;
 } */
+.loading {
+  animation: spinner 0.5s linear infinite;
+}
+@keyframes spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
