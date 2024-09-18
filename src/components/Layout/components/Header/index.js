@@ -121,7 +121,7 @@ function Header() {
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {
                             currentUser ? (
-                                <Image src="" alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
+                                <Image src={ava} alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
                             ) : (
 
                                 <MdIcon.MdMoreVert className="flex text-[23px] text-[#5f6068] cursor-pointer" />
