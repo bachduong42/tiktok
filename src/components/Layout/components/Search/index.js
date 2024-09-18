@@ -4,28 +4,31 @@ import { Wrapper as PopperWrapper } from "~/components/Popper";
 import { BiLoaderCircle } from "react-icons/bi";
 import * as MdIcon from "react-icons/md";
 import { useEffect, useRef, useState } from 'react';
+import { useDebounce } from "~/hooks"
+import * as searchService from "~/apiServices/searchService"
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([])
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false)
     const inputRef = useRef()
+    const debounced = useDebounce(searchValue, 500)
 
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debounced.trim()) {
             setSearchResult([])
             return
         }
 
-        setLoading(true)
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-            .then(res => res.json())
-            .then(res => {
-                setSearchResult(res.data)
-                setLoading(false)
-            })
-            .catch(() => setLoading(false))
-    }, [searchValue])
+
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await searchService.search(debounced);
+            setSearchResult(result)
+            setLoading(false)
+        }
+        fetchApi()
+    }, [debounced])
 
     const handleClear = () => {
         setSearchValue('');
