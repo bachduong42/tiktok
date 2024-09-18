@@ -1,4 +1,4 @@
-import ava1 from "~/images/hy.jpg"
+import ava1 from "~/assets/images/hy.jpg"
 function AccountItem() {
     return (
         <div className="w-full px-4 py-[9px] flex gap-3 hover:bg-[#162c2408]">

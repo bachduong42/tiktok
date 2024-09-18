@@ -6,8 +6,8 @@ function DefaultLayout({ children }) {
         <div>
             <Header></Header>
             <div>
-                <Sidebar></Sidebar>
-                <div>{children}</div>
+                {/* <Sidebar></Sidebar>
+                <div>{children}</div> */}
             </div>
         </div>
     );
