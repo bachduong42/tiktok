@@ -1,4 +1,5 @@
 import { MdArrowBackIos } from "react-icons/md";
+import PropTypes from 'prop-types';
 function Header({ title, onBack }) {
     return (
         <header className="flex relative px-5 py-3">
@@ -10,5 +11,8 @@ function Header({ title, onBack }) {
         </header>
     );
 }
-
+Header.propTypes = {
+    title: PropTypes.string.isRequired,
+    onBack: PropTypes.func.isRequired
+}
 export default Header;
