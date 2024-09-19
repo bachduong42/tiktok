@@ -38,6 +38,13 @@ function Search() {
     const handleHideResult = () => {
         setShowResult(false)
     }
+    const handleChange = (e) => {
+        const searchInput = e.target.value
+        if (!searchInput.startsWith(' ')) {
+            setSearchValue(searchInput)
+        }
+    }
+
     return (
         <HeaderTippy
             onClickOutside={handleHideResult}
@@ -46,16 +53,12 @@ function Search() {
             render={attrs => (
                 <div className="w-[500px] items-start flex" tabIndex="-1" {...attrs}>
                     <PopperWrapper>
-                        <h4>account</h4>
+                        <h4 className='text-[#93949a] w-full flex px-4 py-2'>Accounts</h4>
                         {searchResult.map((result) => (
-                            <AccountItem key={result.id} data={result}></AccountItem>
+                            <AccountItem key={result.id} data={result} ></AccountItem>
                         )
                         )}
-                        {/* <AccountItem></AccountItem>
-                        <AccountItem></AccountItem>
-                        <AccountItem></AccountItem> */}
                     </PopperWrapper>
-
                 </div>
             )}>
             <div className="bg-[#f1f1f2] flex w-full h-full px-[16px] py-[12px] overflow-hidden rounded-[92px] focus-within:border focus-within:border-[#16182333] group ">
@@ -65,7 +68,7 @@ function Search() {
                     placeholder="Search accounts"
                     className="w-full bg-transparent outline-none text-base leading-5"
                     value={searchValue}
-                    onChange={e => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {searchValue && !loading &&
@@ -78,7 +81,9 @@ function Search() {
                 {loading && <BiLoaderCircle className="text-[#93949a] text-[20px] mr-2 loading" />}
                 <span className="w-[1px] h-[28px] my-[-3px] bg-[#1618231f]"></span>
 
-                <button className="w-[54px] h-[46px] py-[11px] pr-[16px] pl-[12px] mr-[-16px] my-[-12px] group-hover:bg-[#1618230f]">
+                <button
+                    onMouseDown={e => e.preventDefault}
+                    className="w-[54px] h-[46px] py-[11px] pr-[16px] pl-[12px] mr-[-16px] my-[-12px] group-hover:bg-[#1618230f]">
                     <MdIcon.MdOutlineSearch className="text-[25px] text-[#93949a] group-hover:text-black" />
                 </button>
             </div>
