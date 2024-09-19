@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"
 import ava1 from "~/assets/images/hy.jpg"
 import avaDefault from "~/assets/images/noimage.jpg"
 function AccountItem({ data }) {
@@ -11,6 +12,10 @@ function AccountItem({ data }) {
             </div>
         </Link>
     );
+}
+
+AccountItem.prototype = {
+    data: PropTypes.object.isRequired
 }
 
 export default AccountItem;

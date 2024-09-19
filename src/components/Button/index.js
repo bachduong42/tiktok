@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
-function Button({ to, href, primary, children, onClick, leftIcon,
-    rightIcon, text, seperate = false, ...passProps }) {
+import PropTypes from "prop-types"
+function Button({
+    to,
+    href,
+    primary,
+    children,
+    onClick,
+    leftIcon,
+    rightIcon,
+    text,
+    seperate = false,
+    ...passProps }) {
     let Comp = 'button'
     const props = {
         onClick,
@@ -23,6 +33,17 @@ function Button({ to, href, primary, children, onClick, leftIcon,
             {rightIcon && <span className="">{rightIcon}</span>}
         </Comp>
     );
+}
+Button.prototype = {
+    to: PropTypes.string,
+    href: PropTypes.string,
+    primary: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func,
+    leftIcon: PropTypes.node,
+    rightIcon: PropTypes.node,
+    text: PropTypes.bool,
+    seperate: PropTypes.bool
 }
 
 export default Button;

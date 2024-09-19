@@ -3,7 +3,7 @@ import Tippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from "~/components/Popper"
 import MenuItem from "./MenuItem";
 import Header from "./Header";
-
+import PropTypes from 'prop-types';
 const defaultfn = () => { }
 
 function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn }) {
@@ -31,12 +31,17 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn 
             offset={[10, 10]}
             placement="bottom-end"
             render={attrs => (
-                <div className="w-[200px] items-start flex mt-2 " tabIndex="-1" {...attrs}>
-                    <PopperWrapper className="w-full" >
-                        {history.length > 1 && <Header title="Language" onBack={() => {
-                            setHistory(prev => prev.slice(0, prev.length - 1))
-                        }}></Header>}
-                        {renderItems()}
+                <div className="w-[200px] items-start flex mt-2" tabIndex="-1" {...attrs}>
+                    <PopperWrapper className=" flex flex-col" >
+                        {history.length > 1 &&
+                            <Header
+                                className="flex-shrink-0"
+                                title={current.title}
+                                onBack={() => {
+                                    setHistory(prev => prev.slice(0, prev.length - 1))
+                                }}>
+                            </Header>}
+                        <div className="overflow-y-auto  max-h-[500px]">{renderItems()}</div>
                     </PopperWrapper>
 
                 </div>
@@ -48,5 +53,10 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn 
         </Tippy>
     );
 }
-
+Menu.propTypes = {
+    children: PropTypes.node,
+    item: PropTypes.array,
+    hideOnClick: PropTypes.bool,
+    onChange: PropTypes.func
+}
 export default Menu;

@@ -1,6 +1,6 @@
 
 export const UploadIcon = ({ width = '20px', height = '20px' }) => (
-    <div class="flex gap-2 justify-center items-center">
+    <div className="flex gap-2 justify-center items-center">
         <svg
             width={width}
             data-e2e=""
@@ -15,13 +15,13 @@ export const UploadIcon = ({ width = '20px', height = '20px' }) => (
      8.41421 13.5 8C13.5 7.58579 13.1642 7.25 12.75 7.25H8.75V3.25C8.75 2.83579 8.41421 2.5 8 2.5Z">
             </path>
         </svg>
-        <span class="css-y3rt08-SpanUploadText e18d3d946">Upload </span>
+        <span className="css-y3rt08-SpanUploadText e18d3d946">Upload </span>
     </div>
 )
 
 export const InboxIcon = ({ width = '32px', height = '32px', className }) => (
     <span>
-        <svg class={className}
+        <svg className={className}
             width={width}
             data-e2e=""
             height={height}
