@@ -1,11 +1,11 @@
 import Header from "~/layouts/components/Header"
-import Sidebar from "../components/Sidebar"
+import Sidebar from "../components/Sidebar/Sidebar"
 import PropTypes from 'prop-types';
 function DefaultLayout({ children }) {
     return (
         <div className="flex flex-col">
             <Header></Header>
-            <div className="mt-[60px]">
+            <div className="mt-[60px] flex w-full max-w-full ">
                 <Sidebar></Sidebar>
                 <div>{children}</div>
             </div>
