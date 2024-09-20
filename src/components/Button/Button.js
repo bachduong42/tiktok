@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types"
 function Button({
+    className,
     to,
     href,
     outline = false,
@@ -25,18 +26,21 @@ function Button({
         Comp = 'a'
     }
     return (
-        <Comp className={`pl-[16px] pr-2 rounded-[4px] flex items-center gap-2 hover:bg-[#162c2408] 
+        <Comp
+            className={`pl-[16px] pr-2 rounded-[4px] flex items-center gap-2 hover:bg-[#162c2408]
+        ${className ? className : ""}
         ${primary ? "w-[120px] h-[36px] py-[6px] text-base leading-[21px] font-bold hover:bg-[#d82549] text-white bg-[#fe2c55] justify-center" : ""} 
         ${text ? "text-black w-full h-[41px] justify-start py-[10px]" : ""}
         ${seperate ? "border-t border-t-[#1618231]" : ""}
-        ${outline ? "text-[#d82549] border border-[#d82549] w-[120px] h-[36px] py-[6px] text-base leading-[21px] font-bold justify-center" : ""}`} {...props}>
+        ${outline ? "text-[#fe2c55] border border-[#fe2c55] py-[6px] text-base leading-[21px] font-bold justify-center hover:bg-[#fe2c550f]" : ""}`} {...props}>
             {leftIcon && <span className="text-[20px]">{leftIcon}</span>}
             <span>{children}</span>
             {rightIcon && <span className="">{rightIcon}</span>}
         </Comp>
     );
 }
-Button.prototype = {
+Button.protoTypes = {
+    className: PropTypes.string,
     to: PropTypes.string,
     href: PropTypes.string,
     outline: PropTypes.bool,
@@ -46,7 +50,7 @@ Button.prototype = {
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
     text: PropTypes.bool,
-    seperate: PropTypes.bool
+    separate: PropTypes.bool
 }
 
 export default Button;
