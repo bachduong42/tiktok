@@ -1,3 +1,11 @@
-
 export { UploadIcon } from './Icons';
 export { InboxIcon } from './Icons';
+export { HomeIcon } from './Icons';
+export { ExploreIcon } from './Icons';
+export { FollowingIcon } from './Icons';
+export { ProfileIcon } from './Icons';
+export { LiveIcon } from './Icons';
+export { HomeIconActive } from './Icons';
+export { ExploreIconActive } from './Icons';
+export { FollowingIconActive } from './Icons';
+export { LiveIconActive } from './Icons';
