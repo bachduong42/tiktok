@@ -15,7 +15,7 @@ function MenuItem({ title, to, icon, activeIcon }) {
                     <span className="flex">
                         {isActive ? activeIcon : icon}
                     </span>
-                    <span className='text-[18px] leading-6 ml-[6px]'>{title}</span>
+                    <span className='text-[18px] leading-6 ml-[6px] lg:block hidden'>{title}</span>
                 </>
             )}
         </NavLink>

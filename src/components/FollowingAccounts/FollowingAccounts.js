@@ -3,8 +3,10 @@ import AccountItem from './AccountItem';
 
 function FollowingAccounts({ label }) {
     return (
-        <div className="flex flex-col items-start">
-            <h3 className="text-[#6b6d73] text-[14px] px-[8px] mt-1 mb-[8px] leading-4 font-semibold">{label}</h3>
+        <div className="flex flex-col items-start w-full">
+            <h3 className="text-[#6b6d73] text-[14px] px-[8px] mt-1 mb-[8px] leading-4 font-semibold lg:block hidden">{label}</h3>
+            <AccountItem></AccountItem>
+            <AccountItem></AccountItem>
             <AccountItem></AccountItem>
             <AccountItem></AccountItem>
             <AccountItem></AccountItem>
@@ -12,6 +14,8 @@ function FollowingAccounts({ label }) {
         </div>
     );
 }
-
+FollowingAccounts.propTypes = {
+    label: PropTypes.string.isRequired
+}
 
 export default FollowingAccounts;
