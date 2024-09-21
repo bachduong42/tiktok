@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Image from '../Image';
 import ava from "~/assets/images/ava.jpg"
 import { CheckFollow } from '../Icons/Icons';
 function AccountItem() {
     return (
-        <div className='flex gap-3 p-2 flex-row items-center rounded-[4px] bg-white hover:bg-[#16182308]'>
+        <div className='flex gap-3 p-2 flex-row w-full items-center rounded-[4px] bg-white hover:bg-[#16182308]'>
             <Image src={ava} alt={ava} className="w-[32px] h-[32px] rounded-[90px]"></Image>
-            <div className='flex flex-col items-start'>
+            <div className='lg:flex hidden flex-col items-start '>
                 <div className='flex gap-1'>
                     <div className='text-[#161823] font-bold text-base mt-[-2px] leading-5 max-w-[145px] overflow-hidden whitespace-nowrap'>byabya42</div>
                     <CheckFollow></CheckFollow>
@@ -16,7 +16,5 @@ function AccountItem() {
         </div>
     );
 }
-AccountItem.propTypes = {
 
-}
 export default AccountItem;

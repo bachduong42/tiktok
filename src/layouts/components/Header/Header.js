@@ -11,6 +11,10 @@ import { Link } from "react-router-dom";
 import config from "~/config"
 import ava from "~/assets/images/ava.jpg"
 import Search from "../Search/Search";
+import { useState } from "react";
+import Register from "~/components/Authentication/Register";
+import Login from "~/components/Authentication/Login";
+import AuthModal from "~/components/Authentication";
 
 const MENU_ITEM = [
     {
@@ -57,7 +61,14 @@ function Header() {
         }
     }
 
-    const currentUser = false
+    const currentUser = false;
+    const [login, setLogin] = useState(false)
+    const handleLogin = () => {
+        setLogin(true);
+    }
+    const handleClose = () => {
+        setLogin(false)
+    }
     const userMenu = ([
         {
             icon: <MdIcon.MdOutlinePerson />,
@@ -85,6 +96,7 @@ function Header() {
 
         }
     ])
+
 
     return (
         <div className=" w-full h-[60px] flex px- border-header fixed bg-white z-10 top-0 left-0">
@@ -115,7 +127,10 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button primary>Log in</Button>
+                            <Button
+                                onClick={handleLogin}
+                                primary>Log in</Button>
+                            {login && <AuthModal onClose={handleClose}></AuthModal>}
                         </>
 
                     )}
