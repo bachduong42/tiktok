@@ -7,12 +7,12 @@ function VideoList({ path }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const videoData = await getVideoList(path, 7);
+            const videoData = await getVideoList(path, 4);
             setVideos(Object.values(videoData.data));
         }
         fetchData()
             .catch(console.error);
-    }, [])
+    }, [path])
 
     return (
         <div className="flex flex-col gap-[50px] py-4">

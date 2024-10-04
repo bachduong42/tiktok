@@ -67,7 +67,7 @@ function Search() {
                     <input
                         ref={inputRef}
                         type="text"
-                        placeholder="Search accounts"
+                        placeholder="Search"
                         className="w-full bg-transparent outline-none text-base leading-5"
                         value={searchValue}
                         onChange={handleChange}
