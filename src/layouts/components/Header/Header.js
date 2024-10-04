@@ -17,6 +17,8 @@ import { UserContext } from "~/contexts/UserContext";
 
 function Header() {
     const { user, logout } = useContext(UserContext);
+    const isLogin = localStorage.getItem('isLogin')
+    console.log(isLogin)
     useEffect(() => {
         if (user) {
             console.log("User has changed:", user.nickname);
@@ -151,7 +153,7 @@ function Header() {
                         </>
 
                     )}
-                    <Menu items={user ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
+                    <Menu items={isLogin ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {
                             user ? (
                                 <Image src={user.avatar || noImages} alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />

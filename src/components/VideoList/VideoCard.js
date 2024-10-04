@@ -1,5 +1,7 @@
-import { MdMusicNote } from "react-icons/md";
+import { MdAdd, MdMusicNote } from "react-icons/md";
 import { useState } from "react";
+import Image from "../Image";
+import { IsLikeIcon, UnLikeIcon } from "../Icons/Icons";
 
 function VideoCard({ video }) {
     const [showMore, setShowMore] = useState(false);
@@ -33,7 +35,28 @@ function VideoCard({ video }) {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center justify-center gap-5">
+                <div className="relative w-[48px] h-[48px] justify-center items-center">
+                    <Image src={video.user.avatar} alt="" className="w-[48px] h-[48px] rounded-[90px]" />
+                    {!video.user.is_followed &&
+                        <button className="w-[24px] h-[24px] bg-[#fe2c55] absolute bottom-0 left-1/2 rounded-[90px] flex  transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
+                            <MdAdd className="w-[20px] h-[20px] text-white justify-center items-center" />
+                        </button>
+                    }
+                </div>
+                <div className="flex flex-col gap-0">
+                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
+                        {video.is_liked ? <IsLikeIcon></IsLikeIcon> : <UnLikeIcon />}
+                    </button>
+                    <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
+                </div>
+                <div className="flex flex-col gap-0">
+                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
+                        {video.is_liked ? <IsLikeIcon></IsLikeIcon> : <UnLikeIcon />}
+                    </button>
+                    <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
+                </div>
+
 
             </div>
         </div>
