@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 function Wrapper({ children }) {
     return (
-        <div className="w-full max-height-custom min-h-[100px] rounded-lg shadow-md ">
+        <div className="w-full max-height-custom min-h-[100px] rounded-lg shadow-md bg-white">
             {children}
         </div>
     );

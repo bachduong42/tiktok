@@ -7,9 +7,12 @@ import imageCoins from "~/assets/images/coins.png"
 import Image from "~/components/Image";
 import sidebarImage from "~/assets/images/sidebarImage.png"
 import FollowingAccounts from "~/components/FollowingAccounts";
+import { useContext } from "react";
+import { UserContext } from "~/contexts/UserContext";
 
 function Sidebar() {
-    const currentUser = false
+    const { user } = useContext(UserContext)
+    // const currentUser = false
     return (
         <div className="lg:w-1/6 w-[72px] lg:border-none border border-r-[1px] border-[#1618231f] border-header
             flex flex-col pt-3 pb-[26px] pl-2 mb-2 fixed top-0 left-0 mt-[60px] overflow-y-auto h-screen sidebar">
@@ -21,7 +24,7 @@ function Sidebar() {
                 <MenuItem title="Profile" to={config.routes.friend} icon={<ProfileIcon></ProfileIcon>} activeIcon={<ProfileIcon></ProfileIcon>}></MenuItem>
             </Menu>
             <hr className="my-3" />
-            {currentUser ? (
+            {user ? (
 
                 <FollowingAccounts label="Following Accounts"></FollowingAccounts>
 

@@ -9,66 +9,85 @@ import { InboxIcon, UploadIcon } from "~/components/Icons";
 import Image from "~/components/Image";
 import { Link } from "react-router-dom";
 import config from "~/config"
-import ava from "~/assets/images/ava.jpg"
+import noImages from "~/assets/images/noimage.jpg"
 import Search from "../Search/Search";
-import { useState } from "react";
-import Register from "~/components/Authentication/Register";
-import Login from "~/components/Authentication/Login";
+import { useContext, useEffect, useState } from "react";
 import AuthModal from "~/components/Authentication";
-
-const MENU_ITEM = [
-    {
-        icon: <MdIcon.MdOutlineHome />,
-        title: "Tools for creators",
-
-
-    },
-    {
-        icon: <MdIcon.MdLanguage />,
-        title: "Vietnamese",
-        children: {
-            title: 'Language',
-            data: [
-                {
-                    code: 'en',
-                    title: 'English'
-                },
-                {
-                    code: 'vi',
-                    title: 'Vietnamese'
-                },
-            ]
-        }
-
-    },
-    {
-        icon: <MdIcon.MdHelpOutline />,
-        title: "Feedback and help",
-    },
-    {
-        icon: <MdIcon.MdNightsStay />,
-        title: "Mode",
-    }
-]
+import { UserContext } from "~/contexts/UserContext";
 
 function Header() {
+    const { user, logout } = useContext(UserContext);
+    useEffect(() => {
+        if (user) {
+            console.log("User has changed:", user.nickname);
+        }
+    }, [user]);
 
+    // console.log("user", user)
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
                 break;
+            case 'logout':
+                if (menuItem.action) {
+                    menuItem.action();
+                }
+                break;
             default:
+
         }
     }
 
-    const currentUser = false;
-    const [login, setLogin] = useState(false)
+    const [login, setLogin] = useState(false);
+
+
     const handleLogin = () => {
         setLogin(true);
     }
     const handleClose = () => {
         setLogin(false)
     }
+
+    const handleLogout = () => {
+        console.log("log out success")
+        logout();
+        window.location.reload();
+    };
+    const MENU_ITEM = [
+        {
+            icon: <MdIcon.MdOutlineHome />,
+            title: "Tools for creators",
+
+
+        },
+        {
+            icon: <MdIcon.MdLanguage />,
+            title: "Vietnamese",
+            children: {
+                title: 'Language',
+                data: [
+                    {
+                        code: 'en',
+                        title: 'English'
+                    },
+                    {
+                        code: 'vi',
+                        title: 'Vietnamese'
+                    },
+                ]
+            }
+
+        },
+        {
+            icon: <MdIcon.MdHelpOutline />,
+            title: "Feedback and help",
+        },
+        {
+            icon: <MdIcon.MdNightsStay />,
+            title: "Mode",
+        }
+    ]
+
     const userMenu = ([
         {
             icon: <MdIcon.MdOutlinePerson />,
@@ -91,12 +110,11 @@ function Header() {
         {
             icon: <MdIcon.MdLogin />,
             title: "Log out",
-            to: '/logout',
             seperate: true,
-
+            isLogout: true,
+            action: handleLogout
         }
     ])
-
 
     return (
         <div className=" w-full h-[60px] flex px- border-header fixed bg-white z-10 top-0 left-0">
@@ -115,13 +133,12 @@ function Header() {
 
 
                 <div className="flex gap-5 items-center justify-center">
-                    {currentUser ? (
+                    {user ? (
                         <>
                             <button className="flex gap-3 w-[110px] h-[36px] items-center justify-center border border-[#1618231f] hover:bg-[#16182308] cursor-pointer">
                                 <UploadIcon></UploadIcon>
                             </button>
                             <Tippy content="Inbox">
-
                                 <button className="bg-transparent flex"><InboxIcon className="cursor-pointer"></InboxIcon></button>
                             </Tippy>
                         </>
@@ -134,10 +151,10 @@ function Header() {
                         </>
 
                     )}
-                    <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
+                    <Menu items={user ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {
-                            currentUser ? (
-                                <Image src={ava} alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
+                            user ? (
+                                <Image src={user.avatar || noImages} alt="" className="w-[32px] h-[32px] rounded-[90px] cursor-pointer" />
                             ) : (
 
                                 <MdIcon.MdMoreVert className="flex text-[23px] text-[#5f6068] cursor-pointer" />

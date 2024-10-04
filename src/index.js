@@ -4,13 +4,19 @@ import './index.css';
 import App from '~/App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import { UserProvider } from './contexts/UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GlobalStyles>
-      <App />
-    </GlobalStyles>
+    <UserProvider>
+      <GlobalStyles>
+        <ToastContainer className="w-[10px]" />
+        <App />
+      </GlobalStyles>
+    </UserProvider>
   </React.StrictMode>
 );
 

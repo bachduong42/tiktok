@@ -63,7 +63,7 @@ function Search() {
                         </PopperWrapper>
                     </div>
                 )}>
-                <div className="bg-[#f1f1f2] flex w-full h-full px-[16px] py-[12px] overflow-hidden rounded-[92px] focus-within:border focus-within:border-[#16182333] group ">
+                <div className="bg-[#f1f1f2] flex w-full h-full px-[16px] py-[12px] overflow-hidden rounded-[92px] focus-within:border focus-within:border-[#16182333] group">
                     <input
                         ref={inputRef}
                         type="text"
