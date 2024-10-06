@@ -19,10 +19,10 @@ import { SendIcon } from "~/components/Icons/Icons";
 function Header() {
     const { user, logout } = useContext(UserContext);
     const isLogin = localStorage.getItem('isLogin')
-    console.log(isLogin)
+    // console.log(isLogin)
     useEffect(() => {
         if (user) {
-            console.log("User has changed:", user.nickname);
+            // console.log("User has changed:", user.nickname);
         }
     }, [user]);
 
@@ -95,7 +95,7 @@ function Header() {
         {
             icon: <MdIcon.MdOutlinePerson />,
             title: "View profile",
-            to: '/profile'
+            to: '/my-profile'
 
         },
         {

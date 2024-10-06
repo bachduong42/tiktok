@@ -12,6 +12,7 @@ import { UserContext } from "~/contexts/UserContext";
 
 function Sidebar() {
     const { user } = useContext(UserContext)
+
     // const currentUser = false
     return (
         <div className="lg:w-1/6 w-[72px] lg:border-none border border-r-[1px] border-[#1618231f] border-header
@@ -21,7 +22,7 @@ function Sidebar() {
                 <MenuItem title="Explore" to={config.routes.explore} icon={<ExploreIcon></ExploreIcon>} activeIcon={<ExploreIconActive></ExploreIconActive>}></MenuItem>
                 <MenuItem title="Following" to={config.routes.follow} icon={<FollowingIcon></FollowingIcon>} activeIcon={<FollowingIconActive></FollowingIconActive>}></MenuItem>
                 <MenuItem title="Live" to={config.routes.live} icon={<LiveIcon></LiveIcon>} activeIcon={<LiveIconActive></LiveIconActive>}></MenuItem>
-                <MenuItem title="Profile" to={config.routes.friend} icon={<ProfileIcon></ProfileIcon>} activeIcon={<ProfileIcon></ProfileIcon>}></MenuItem>
+                <MenuItem title="Profile" to={config.routes.myinfo} icon={<ProfileIcon></ProfileIcon>} activeIcon={<ProfileIcon></ProfileIcon>} user={user}></MenuItem>
             </Menu>
             <hr className="my-3" />
             {user ? (

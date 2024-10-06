@@ -100,7 +100,7 @@ function Login({ onClose, onToggle }) {
                         required
                         value={email}
                         onChange={handleChangeEmail}
-                        type="text"
+                        type="email"
                         onBlur={handleCheckEmail}
                         className={`flex w-[350px] h-[55px] text-[15px] text-black border  bg-white hover:bg-[#f8f8f8] border-[#d0d1d3] items-center outline-none pl-4   focus-within:border focus-within:border-[#51525c33] rounded-[4px] `}
                         placeholder="Tên đăng nhập..." />

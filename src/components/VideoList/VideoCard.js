@@ -112,7 +112,7 @@ function VideoCard({ video }) {
                     <span className="text-xs leading-4 text-[#161823bf]">{video.shares_count}</span>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
