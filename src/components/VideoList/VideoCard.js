@@ -1,22 +1,65 @@
-import { MdAdd, MdMusicNote } from "react-icons/md";
-import { useState } from "react";
+import { MdAdd, MdMoreHoriz, MdMusicNote } from "react-icons/md";
+import { useRef, useState } from "react";
 import Image from "../Image";
-import { CommentIcon, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
+import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
 
 function VideoCard({ video }) {
+    const [volume, setVolume] = useState(0);
     const [showMore, setShowMore] = useState(false);
-
+    const [isHover, setIsHover] = useState(false);
+    const [isHoverVideo, setIsHoverVideo] = useState(false);
+    const videoRef = useRef(null);
     const toggleShowMore = () => {
         setShowMore(prev => !prev);
     };
+    const handleChangeVolume = (e) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        if (videoRef.current) {
+            videoRef.current.volume = newVolume;
+        }
+    }
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
-            <div className="flex gap-5 w-[354px] h-[629px] relative bg-white">
-                <video autoPlay loop muted className="w-full h-full object-cover block rounded-md">
+            <div
+                onMouseEnter={() => setIsHoverVideo(true)}
+                onMouseLeave={() => setIsHoverVideo(false)}
+                className="flex gap-5 w-[354px] h-[629px] relative bg-white cursor-pointer">
+                <video
+                    ref={videoRef}
+                    autoPlay
+                    loop
+                    muted={volume === 0}
+                    className="w-full h-full object-cover block rounded-[20px]">
                     <source src={video.file_url} type="video/mp4" />
                 </video>
-                <div className="absolute w-full h-full inset-0 bg-black bg-opacity-5"></div>
+                <div className="absolute w-full h-full inset-0 bg-black bg-opacity-5 rounded-[20px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-30 z-10"></div>
+                <div className="flex w-full absolute top-0 left-0 text-start p-3 justify-between inset-0 h-[50px] z-20">
+                    <div className="flex gap-2 w-[112px]"
+                        onMouseEnter={() => setIsHover(true)}
+                        onMouseLeave={() => setIsHover(false)}>
+                        {volume === 0 ? (
+                            <MuteIcon className="text-white" />
+                        ) : (
+                            isHoverVideo && <VolumnIcon className="text-white" />
+                        )}
+                        {isHover && (
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.1"
+                                value={volume}
+                                onChange={handleChangeVolume}
+                                className=""
+                            />
+                        )}
+                    </div>
+                    {isHoverVideo && <MdMoreHoriz className="text-white text-[25px]" />}
+                </div>
                 <div className="absolute text-[#ffffffe6] flex flex-col bottom-0 left-0 gap-2 pb-5 text-start pl-3 w-full">
+
                     <span className="text-[14px] leading-[18px] inline-block hover:underline cursor-pointer">{video.user.nickname}</span>
                     <span className="text-[14px] leading-[18px] inline w-[90%] cursor-pointer">
                         {showMore ? video.description : video.description.length > 50 ? `${video.description.substring(0, 40)}...` : video.description}
@@ -69,7 +112,7 @@ function VideoCard({ video }) {
                     <span className="text-xs leading-4 text-[#161823bf]">{video.shares_count}</span>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
