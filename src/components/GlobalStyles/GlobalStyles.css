@@ -54,17 +54,13 @@ code {
   src: url('/src/assets/fonts/TikTokFont-Semibold.woff2');
   font-weight: 600;
 }
-/* /* @font-face {
-  font-family: TikTokFont;
-  src: url("/src/assets/fonts/TikTokDisplayFont-Bold.woff2");
-  font-weight: 700;
-} */
+
 @font-face {
   font-family: TikTokDisplayFont;
   src: url('/src/assets/fonts/TikTokDisplayFont-Bold.woff2');
   font-weight: 700;
 }
-*/ .loading {
+.loading {
   animation: spinner 0.5s linear infinite;
 }
 @keyframes spinner {
@@ -129,4 +125,34 @@ html *::-webkit-scrollbar-track {
 .sidebar:hover::-webkit-scrollbar-track {
   border-radius: 0;
   background-color: rgba(0, 0, 0, 0);
+}
+/* Video Card */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 64px;
+  cursor: pointer;
+  outline: none;
+  height: 24px;
+  background: #16182357;
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 0 3px;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 1px;
+  background: #ccc;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #ccc;
+  border-radius: 50%;
+  margin-top: -5.5px;
+  cursor: pointer;
 }

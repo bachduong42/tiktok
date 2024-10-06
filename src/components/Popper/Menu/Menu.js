@@ -6,7 +6,7 @@ import Header from "./Header";
 import PropTypes from 'prop-types';
 const defaultfn = () => { }
 
-function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn }) {
+function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn, onLogout = defaultfn }) {
     const [history, setHistory] = useState([{ data: items }])
     const current = history[history.length - 1]
     const renderItems = () => {
@@ -20,7 +20,12 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultfn 
                     if (isParent) {
                         setHistory(prev => [...prev, item.children])
                     } else {
-                        onChange(item)
+                        if (item.isLogout && item.action) {
+                            item.action();
+                        } else {
+                            onChange(item);
+                            console.log(`Clicked on item: ${item.title}`);
+                        }
                     }
                 }}></MenuItem>
         });
@@ -65,6 +70,7 @@ Menu.propTypes = {
     children: PropTypes.node,
     item: PropTypes.array,
     hideOnClick: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onLogout: PropTypes.func,
 }
 export default Menu;

@@ -7,7 +7,7 @@ function DefaultLayout({ children }) {
             <Header></Header>
             <div className="mt-[60px] flex flex-col w-full max-w-full ">
                 <Sidebar></Sidebar>
-                <div>{children}</div>
+                <div className="flex-grow lg:ml-[16.67%] ml-[72px]">{children}</div>
             </div>
         </div>
     );
