@@ -54,17 +54,13 @@ code {
   src: url('/src/assets/fonts/TikTokFont-Semibold.woff2');
   font-weight: 600;
 }
-/* /* @font-face {
-  font-family: TikTokFont;
-  src: url("/src/assets/fonts/TikTokDisplayFont-Bold.woff2");
-  font-weight: 700;
-} */
+
 @font-face {
   font-family: TikTokDisplayFont;
   src: url('/src/assets/fonts/TikTokDisplayFont-Bold.woff2');
   font-weight: 700;
 }
-*/ .loading {
+.loading {
   animation: spinner 0.5s linear infinite;
 }
 @keyframes spinner {
