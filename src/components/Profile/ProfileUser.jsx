@@ -1,5 +1,5 @@
 import { useState } from "react";
-import noImage from "../../assets/images/hy.jpg"
+import noImage from "../../assets/images/noimage.jpg"
 import Button from "~/components/Button";
 import { ProfileLeftFavoritesIcon, ProfileLeftLikedIcon, ProfileLeftRepostsIcon, ProfileLeftVideoIcon, SettingIcon, ShareProfile } from "~/components/Icons/Icons";
 import EditMyProfile from "./EditMyProfile";
@@ -16,8 +16,11 @@ function ProfileUser({ myInfo }) {
 
     return (
         <div className="w-full h-full pt-[32px] px-[24px] pb-[36px]">
-            <div className="flex flex-row w-full gap-[28px]">
-                <img src={userAvatar} alt={userAvatar} className="w-[212px] h-[212px] rounded-full object-cover" />
+            <div className="flex w-full gap-7 ">
+                <img
+                    src={userAvatar} alt=""
+                    className="w-[212px] h-[212px] rounded-full object-cover"
+                />
                 <div className="flex flex-col gap-[12px] w-full justify-center">
                     <div className="flex gap-[12px] items-center">
                         <div className="text-[24px] leading-[30px] text-[#161823] font-bold">{myInfo.nickname || 'Nickname'}</div>
@@ -25,7 +28,7 @@ function ProfileUser({ myInfo }) {
                     </div>
                     <div className="flex gap-[12px] items-center">
                         <Button primary onClick={() => setOpenEditProfile(true)}>Edit profile</Button>
-                        {/* {openEditProfile && <EditMyProfile onClose={() => setOpenEditProfile(false)}></EditMyProfile>} */}
+                        {openEditProfile && <EditMyProfile onClose={() => setOpenEditProfile(false)}></EditMyProfile>}
                         <Button className="bg-[#f2f2f2] w-[136px] h-[36px] font-semibold hover:bg-[#0000001f] transition-all duration-100">Promote post</Button>
                         <button className="bg-[#f2f2f2] w-[36px] h-[36px] hover:bg-[#0000001f] transition-all duration-100 items-center justify-center flex rounded-[6px]">
                             <SettingIcon></SettingIcon>

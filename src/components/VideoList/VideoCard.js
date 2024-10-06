@@ -34,8 +34,7 @@ function VideoCard({ video }) {
                     <source src={video.file_url} type="video/mp4" />
                 </video>
                 <div className="absolute w-full h-full inset-0 bg-black bg-opacity-5 rounded-[20px]"></div>
-                <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-30 z-10"></div>
-                <div className="flex w-full absolute top-0 left-0 text-start p-3 justify-between inset-0 h-[50px] z-20">
+                <div className="flex w-full absolute top-0 left-0 text-start p-3 justify-between inset-0 h-[50px] ">
                     <div className="flex gap-2 w-[112px]"
                         onMouseEnter={() => setIsHover(true)}
                         onMouseLeave={() => setIsHover(false)}>
@@ -60,7 +59,7 @@ function VideoCard({ video }) {
                 </div>
                 <div className="absolute text-[#ffffffe6] flex flex-col bottom-0 left-0 gap-2 pb-5 text-start pl-3 w-full">
 
-                    <span className="text-[14px] leading-[18px] inline-block hover:underline cursor-pointer">{video.user.nickname}</span>
+                    <span className="text-[14px] leading-[18px] inline-block   hover:underline cursor-pointer">{video.user.nickname}</span>
                     <span className="text-[14px] leading-[18px] inline w-[90%] cursor-pointer">
                         {showMore ? video.description : video.description.length > 50 ? `${video.description.substring(0, 40)}...` : video.description}
                         {video.description.length > 50 && (

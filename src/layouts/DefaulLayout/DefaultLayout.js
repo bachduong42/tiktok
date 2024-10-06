@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar/Sidebar"
 import PropTypes from 'prop-types';
 function DefaultLayout({ children }) {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col z-0">
             <Header></Header>
             <div className="mt-[60px] flex flex-col w-full max-w-full ">
                 <Sidebar></Sidebar>

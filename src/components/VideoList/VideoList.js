@@ -1,46 +1,52 @@
 import { useEffect, useState } from "react";
 import getVideoList from "~/services/getVideoList"
 import VideoCard from "./VideoCard";
+import VideoExploreCard from "./VideoExploreCard";
 
-function VideoList({ path }) {
+function VideoList({ path, explore }) {
     const [videos, setVideos] = useState([]);
+    const [page, setPage] = useState(2);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const videoData = await getVideoList(path, 4);
-            setVideos(Object.values(videoData.data));
-        }
-        fetchData()
-            .catch(console.error);
-    }, [path])
-    const handleIntersection = (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const fetchVideos = async (pageNumber) => {
+        setLoading(true);
+        try {
+            const videoData = await getVideoList(path, pageNumber);
+            if (videoData && videoData.data) {
+                setVideos(prevVideos => [...prevVideos, ...Object.values(videoData.data)]);
             }
-        });
+        } catch (error) {
+            console.error("Failed to fetch videos:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
-        const observer = new IntersectionObserver(handleIntersection, {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
-        });
 
-        const videoCards = document.querySelectorAll('.video-card');
-        videoCards.forEach(card => observer.observe(card));
+        fetchVideos(page);
+    }, [page]);
 
+    const handleScroll = () => {
+        if (loading) return;
+        const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+        if (nearBottom) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
         return () => {
-            videoCards.forEach(card => observer.unobserve(card));
+            window.removeEventListener("scroll", handleScroll);
         };
-    }, [videos]);
+    }, [loading]);
+
     return (
-        <div className="flex flex-col gap-[50px] py-4 ">
+        <div className={`w-full grid  ${explore ? 'grid-cols-4 gap-[30px]' : 'grid-cols-1 gap-[50px]'} justify-items-center`}>
             {
                 videos.map((video) => (
                     <div className="video-card" key={video.id}>
-                        <VideoCard video={video}></VideoCard>
+                        {explore ? <VideoExploreCard video={video}></VideoExploreCard> : <VideoCard video={video}></VideoCard>}
                     </div>
                 ))
             }
