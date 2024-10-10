@@ -1,23 +1,34 @@
-import { MdAdd, MdMoreHoriz, MdMusicNote } from "react-icons/md";
+import { MdAdd, MdCheck, MdMoreHoriz, MdMusicNote } from "react-icons/md";
 import { useRef, useState } from "react";
 import Image from "../Image";
 import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
+import UserToolTip from "../Popper/UserToolTip";
 
 function VideoCard({ video }) {
     const [volume, setVolume] = useState(0);
     const [showMore, setShowMore] = useState(false);
     const [isHover, setIsHover] = useState(false);
     const [isHoverVideo, setIsHoverVideo] = useState(false);
+    const [showUser, setShowUser] = useState(false);
     const videoRef = useRef(null);
     const toggleShowMore = () => {
         setShowMore(prev => !prev);
     };
     const handleChangeVolume = (e) => {
         const newVolume = parseFloat(e.target.value);
+        console.log(newVolume)
         setVolume(newVolume);
         if (videoRef.current) {
             videoRef.current.volume = newVolume;
         }
+    }
+    const handleHideResult = () => {
+        setShowUser(false)
+    }
+    const handleMuteIcon = () => {
+        console.log("click")
+        setVolume(0)
+        videoRef.current.volume = 0;
     }
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
@@ -39,9 +50,10 @@ function VideoCard({ video }) {
                         onMouseEnter={() => setIsHover(true)}
                         onMouseLeave={() => setIsHover(false)}>
                         {volume === 0 ? (
-                            <MuteIcon className="text-white" />
+                            <MuteIcon className="text-white"
+                            />
                         ) : (
-                            isHoverVideo && <VolumnIcon className="text-white" />
+                            isHoverVideo && <VolumnIcon className="text-white" onClick={handleMuteIcon} />
                         )}
                         {isHover && (
                             <input
@@ -59,7 +71,7 @@ function VideoCard({ video }) {
                 </div>
                 <div className="absolute text-[#ffffffe6] flex flex-col bottom-0 left-0 gap-2 pb-5 text-start pl-3 w-full">
 
-                    <span className="text-[14px] leading-[18px] inline-block   hover:underline cursor-pointer">{video.user.nickname}</span>
+                    <span className="text-[14px] leading-[18px] inline-block   hover:underline cursor-pointer display-text">{video.user.nickname}</span>
                     <span className="text-[14px] leading-[18px] inline w-[90%] cursor-pointer">
                         {showMore ? video.description : video.description.length > 50 ? `${video.description.substring(0, 40)}...` : video.description}
                         {video.description.length > 50 && (
@@ -79,10 +91,21 @@ function VideoCard({ video }) {
             </div>
             <div className="flex flex-col items-center justify-end ">
                 <div className="relative w-[48px] h-[48px] justify-center items-center mb-6">
-                    <Image src={video.user.avatar} alt="" className="w-[48px] h-[48px] rounded-[90px]" />
-                    {!video.user.is_followed &&
+                    <UserToolTip video={video} showUser={showUser} handleHideResult={handleHideResult} setShowUser={setShowUser}>
+                        <Image
+                            src={video.user.avatar}
+                            alt=""
+                            className="w-[48px] h-[48px] rounded-[90px] cursor-pointer"
+                            onMouseEnter={() => {
+                                setShowUser(true)
+                            }} />
+                    </UserToolTip>
+                    {!video.user.is_followed ?
                         <button className="w-[24px] h-[24px] bg-[#fe2c55] absolute bottom-0 left-1/2 rounded-[90px] flex  transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
                             <MdAdd className="w-[20px] h-[20px] text-white justify-center items-center" />
+                        </button>
+                        : <button className="w-[24px] h-[24px] bg-white absolute bottom-0 left-1/2 rounded-[90px] flex  transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
+                            <MdCheck className="w-[20px] h-[20px] text-[#fe2c55] justify-center items-center" />
                         </button>
                     }
                 </div>

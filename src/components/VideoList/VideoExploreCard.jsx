@@ -1,4 +1,4 @@
-import { MdAdd, MdMoreHoriz, MdMusicNote } from "react-icons/md";
+import { MdMoreHoriz } from "react-icons/md";
 import { useRef, useState } from "react";
 import { MuteIcon, VolumnIcon } from "../Icons/Icons";
 
