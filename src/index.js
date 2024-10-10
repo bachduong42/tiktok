@@ -13,7 +13,16 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <GlobalStyles>
-        <ToastContainer className="w-[10px]" />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          pauseOnFocusLoss
+          theme="light"
+        />
         <App />
       </GlobalStyles>
     </UserProvider>

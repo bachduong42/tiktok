@@ -20,8 +20,6 @@ function Search() {
             setSearchResult([])
             return
         }
-
-
         const fetchApi = async () => {
             setLoading(true)
             const result = await searchService.search(debouncedValue);

@@ -3,7 +3,7 @@ import * as FaIcon from "react-icons/fa";
 import Button from "../Button";
 import { MdClose } from "react-icons/md";
 import { toast } from 'react-toastify'
-import signupService from "~/services/signupService";
+import { signupService } from "~/services/loginService";
 function Register({ onClose, onToggle }) {
     const [showPass, setShowPass] = useState(false);
     const [email, setEmail] = useState('');

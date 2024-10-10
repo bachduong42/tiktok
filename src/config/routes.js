@@ -6,7 +6,8 @@ const routes = {
     myinfo: '/my-profile',
     upload: '/upload',
     friend: '/friend',
-    live: '/live'
+    live: '/live',
+    detailupload: '/detailupload'
 }
 
 export default routes

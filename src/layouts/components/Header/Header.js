@@ -15,7 +15,6 @@ import { useContext, useEffect, useState } from "react";
 import AuthModal from "~/components/Authentication";
 import { UserContext } from "~/contexts/UserContext";
 import { SendIcon } from "~/components/Icons/Icons";
-
 function Header() {
     const { user, logout } = useContext(UserContext);
     const isLogin = localStorage.getItem('isLogin')
@@ -138,9 +137,9 @@ function Header() {
                 <div className="flex gap-5 items-center justify-center">
                     {user ? (
                         <>
-                            <button className="flex gap-3 w-[110px] h-[36px] items-center justify-center border border-[#1618231f] hover:bg-[#16182308] cursor-pointer">
+                            <Button to={config.routes.upload} className="flex gap-3 w-[110px] h-[36px] items-center justify-center border border-[#1618231f] hover:bg-[#16182308] cursor-pointer">
                                 <UploadIcon></UploadIcon>
-                            </button>
+                            </Button>
                             <Tippy content="Messages">
                                 <button className="bg-transparent flex"><SendIcon className="cursor-pointer"></SendIcon></button>
                             </Tippy>

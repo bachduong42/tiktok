@@ -57,8 +57,21 @@ code {
 
 @font-face {
   font-family: TikTokDisplayFont;
+  src: url('/src/assets/fonts/TikTokDisplayFont-Semibold.woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: TikTokDisplayFont;
   src: url('/src/assets/fonts/TikTokDisplayFont-Bold.woff2');
   font-weight: 700;
+}
+.display-text {
+  font-family: 'TikTokDisplayFont';
+  font-weight: 700;
+}
+.display-text-semi {
+  font-family: 'TikTokDisplayFont';
+  font-weight: 600;
 }
 .loading {
   animation: spinner 0.5s linear infinite;

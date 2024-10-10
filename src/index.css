@@ -12,3 +12,17 @@
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 } */
+.Toastify__toast-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+.Toastify__toast {
+  margin: 0;
+}
