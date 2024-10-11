@@ -191,9 +191,9 @@ export const IconMusic = ({ width = '14px', height = '14px', className }) => (
         className={className}>
         <use href="#Music_Note-6c3c6885"></use></svg>
 )
-export const UnLikeIcon = ({ width = '21px', height = '19px', color }) => (
+export const UnLikeIcon = ({ width, height, color }) => (
     <svg
-        width="24" data-e2e="" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        width={width} data-e2e="" height={height} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#HeartFill_clip0)"><g filter="url(#HeartFill_filter0_d)">
             <path fillRule="evenodd" clipRule="evenodd" d="M7.5 2.25C10.5 2.25 12 4.25 12 4.25C12 4.25 13.5 2.25 16.5 2.25C20 2.25 22.5 4.99999 22.5 8.5C22.5 12.5 19.2311 16.0657 16.25 18.75C14.4095 
             20.4072 13 21.5 12 21.5C11 21.5 9.55051 20.3989 7.75 18.75C4.81949 16.0662 1.5 12.5 1.5 8.5C1.5 4.99999 4 2.25 7.5 2.25Z"></path></g>
@@ -204,9 +204,9 @@ export const UnLikeIcon = ({ width = '21px', height = '19px', color }) => (
             </feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend></filter><clipPath id="HeartFill_clip0"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
 );
 
-export const IsLikeIcon = ({ width = '21px', height = '19px', color }) => (
+export const IsLikeIcon = ({ width, height, color }) => (
     <svg
-        width="24" data-e2e="" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        width={width} data-e2e="" height={height} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#LikeRedShadowColor_filter0_d)"><path fillRule="evenodd" clipRule="evenodd" d="M15 4.5C21 4.5 24 8.5 24 8.5C24 8.5 27 4.5 33 4.5C40 4.5 45 9.99998 45 17C45 25 38.4622 32.1314 32.5
          37.5C28.8191 40.8144 26 43 24 43C22 43 19.101 40.7978 15.5 37.5C9.63898 32.1325 3 25 3 17C3 9.99998 8 4.5 15 4.5Z" fill="#FE2C55"></path></g><path fillRule="evenodd" clipRule="evenodd" d="M4.80371 24.3995C7.17815 
          29.3932 11.5185 33.8538 15.4999 37.4999C19.1009 40.7978 21.9999 42.9999 23.9999 42.9999C25.9999 42.9999 28.819 40.8144 32.4999 37.4999C38.4621 32.1314 44.9999 24.9999 44.9999 16.9999C44.9999 16.8252 44.9968 16.6513 44.9906 16.4785C41.1344 27.3238 27.3575 37 23.5001 37C20.6255 37 
@@ -214,16 +214,16 @@ export const IsLikeIcon = ({ width = '21px', height = '19px', color }) => (
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1.2"></feOffset><feGaussianBlur stdDeviation="1.2"></feGaussianBlur><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend></filter></defs></svg>
 );
 
-export const CommentIcon = ({ width = '24px', height = '25px' }) => (
-    <FaCommentDots width={width} height={height} className="text-[rbg(22,24,35)] text-[21px]" />
+export const CommentIcon = ({ width, height, className }) => (
+    <FaCommentDots width={width} height={height} className={`text-[rbg(22,24,35)] ${className}`} />
 );
 
-export const SaveIcon = ({ width = '24px', height = '25px' }) => (
-    <FaBookmark width={width} height={height} className="text-[rbg(22,24,35)] text-[21px]" />
+export const SaveIcon = ({ width, height, className }) => (
+    <FaBookmark width={width} height={height} className={`text-[rbg(22,24,35)] ${className}`} />
 );
 
-export const ShareIcon = ({ width = '24px', height = '25px' }) => (
-    <FaShareNodes width={width} height={height} className="text-[rbg(22,24,35)] text-[21px]" />
+export const ShareIcon = ({ width, height, className }) => (
+    <FaShareNodes width={width} height={height} className={`text-[rbg(22,24,35)] ${className}`} />
 );
 
 export const VolumnIcon = ({ width = '24px', height = '24px' }) => (
@@ -344,3 +344,27 @@ export const LockIcon = ({ width = '72px', height = '72px' }) => (
 export const NoContentIcon = ({ width = '37px', height = '37px' }) => (
     <svg fill="currentColor" color="inherit" font-size="44px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width={width} height={height}><path d="M4 28a2.5 2.5 0 0 1 2.5-2.5H20a2.5 2.5 0 0 1 2.5 2.5v13.5A2.5 2.5 0 0 1 20 44H6.5A2.5 2.5 0 0 1 4 41.5V28Zm4 1.5V40h10.5V29.5H8ZM25.5 28a2.5 2.5 0 0 1 2.5-2.5h13.5A2.5 2.5 0 0 1 44 28v13.5a2.5 2.5 0 0 1-2.5 2.5H28a2.5 2.5 0 0 1-2.5-2.5V28Zm4 1.5V40H40V29.5H29.5ZM25.5 6.5A2.5 2.5 0 0 1 28 4h13.5A2.5 2.5 0 0 1 44 6.5V20a2.5 2.5 0 0 1-2.5 2.5H28a2.5 2.5 0 0 1-2.5-2.5V6.5Zm4 1.5v10.5H40V8H29.5ZM4 6.5A2.5 2.5 0 0 1 6.5 4H20a2.5 2.5 0 0 1 2.5 2.5V20a2.5 2.5 0 0 1-2.5 2.5H6.5A2.5 2.5 0 0 1 4 20V6.5ZM8 8v10.5h10.5V8H8Z"></path></svg>
 )
+export const IconDetailVideo1 = ({ width = '24px', height = '24px' }) => {
+    return <svg
+        fontSize="24px" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width={width} height={height} className="rounded-full cursor-pointer"><path fill="#FACE15" d="M0 0h48v48H0z"></path><path d="M30.01 22.53v5.22h-3.46a.82.82 0 0 0-.62 1.35l4.56 5.32c.43.5 1.22.5 1.65 0l4.56-5.32a.82.82 0 0 0-.62-1.35h-3.13v-5.28c0-1.14 0-2.36-.07-3.1a5.68 5.68 0 0 0-.57-2.24 5.74 5.74 0 0 0-2.5-2.5c-.7-.36-1.45-.5-2.25-.57-.78-.06-.92-.06-2.07-.06H23.7a.79.79 0 0 0-.78.79v1.36c0 .43.35.78.78.78h1.73c1.22 0 1.25 0 1.89.06.62.05.93.14 1.15.25.53.27.96.7 1.23 1.22.1.18.2.53.25 1.15.05.64.06 1.7.06 2.92ZM17.89 21.2h3.46c.7 0 1.08-.82.63-1.35l-4.56-5.32a1.1 1.1 0 0 0-1.66 0l-4.56 5.32a.82.82 0 0 0 .62 1.35h3.13v5.28c0 1.14.01 2.37.07 3.1.07.84.21 1.54.57 2.24a5.74 5.74 0 0 0 2.5 2.5c.7.36 1.45.5 2.25.57.78.06.92.06 2.07.06h1.79c.43 0 .78-.35.78-.78V32.8a.79.79 0 0 0-.78-.78h-1.73c-1.22 0-1.25 0-1.89-.06a3.04 3.04 0 0 1-1.15-.25 2.8 2.8 0 0 1-1.22-1.22c-.11-.18-.2-.53-.26-1.15-.05-.64-.06-1.7-.06-2.92V21.2Z" fill="#fff"></path></svg>
+}
+export const IconDetailVideo2 = ({ width = '24px', height = '24px' }) => {
+    return <svg
+        className="cursor-pointer"
+        width={width} data-e2e="" height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#161823" fillOpacity="0.75"></path><path fillRule="evenodd" clipRule="evenodd" d="M12.313 7.96568C12.3665 7.65966 12.658 7.45498 12.964 7.50851C13.27 7.56203 13.4747 7.8535 13.4211 8.15951L12.0506 15.9952C11.997 16.3012 11.7056 16.5059 11.3996 16.4523C11.0936 16.3988 10.8889 16.1073 10.9424 15.8013L12.313 7.96568ZM16.2402 8.77448C15.96 8.48453 15.5058 8.48453 15.2256 8.77448C14.9454 9.06443 14.9454 9.53454 15.2256 9.82449L17.454 12.1307L15.2262 14.4364C14.946 14.7263 14.946 15.1964 15.2262 15.4864C15.5063 15.7763 15.9606 15.7763 16.2407 15.4864L19.4551 12.1598C19.4704 12.1439 19.4704 12.1182 19.4551 12.1023L19.2233 11.8623L19.2201 11.8586L19.2158 11.854L16.2402 8.77448ZM8.88972 15.4867C8.59977 15.7766 8.12966 15.7766 7.83971 15.4867L5.4207 13.0677L4.76017 12.4071L4.51191 12.1589C4.49603 12.143 4.49603 12.1173 4.51191 12.1014L7.83853 8.77477C8.12848 8.48482 8.59859 8.48482 8.88854 8.77477C9.17849 9.06472 9.17849 9.53482 8.88854 9.82478L6.58318 12.1301L8.88972 14.4367C9.17967 14.7266 9.17967 15.1967 8.88972 15.4867Z" fill="white"></path></svg>
+}
+export const IconDetailVideo3 = ({ width = '24px', height = '24px' }) => {
+    return <svg
+        className="cursor-pointer"
+        width={width} data-e2e="" height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#FE2C55"></path><path fillRule="evenodd" clipRule="evenodd" d="M18.7913 7.1875C18.6796 6.99413 18.4733 6.875 18.25 6.875H5.75001C5.50258 6.875 5.27845 7.02097 5.17839 7.24727C5.07834 7.47356 5.1212 7.73758 5.28771 7.9206L8.55021 11.5065C8.72305 11.6965 8.9945 11.7614 9.23456 11.6702L13.7656 9.94799C13.8184 9.92795 13.8423 9.93624 13.8527 9.94039C13.871 9.94765 13.8971 9.96649 13.9177 10.0013C13.9382 10.0361 13.9421 10.0681 13.9396 10.0876C13.9382 10.0987 13.9339 10.1237 13.8909 10.1602L10.1707 13.3155C9.97902 13.4782 9.90339 13.7398 9.97878 13.9796L11.4038 18.5124C11.4781 18.749 11.6853 18.9192 11.9317 18.9463C12.1781 18.9734 12.4173 18.8522 12.5413 18.6375L18.7913 7.81251C18.9029 7.61913 18.9029 7.38088 18.7913 7.1875Z" fill="white"></path></svg>
+}
+export const IconDetailVideo4 = ({ width = '24px', height = '24px' }) => {
+    return <svg
+        className="cursor-pointer"
+        width={width} data-e2e="" height={height} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 47C36.7025 47 47 36.7025 47 24C47 11.2975 36.7025 1 24 1C11.2975 1 1 11.2975 1 24C1 36.7025 11.2975 47 24 47Z" fill="white"></path><path d="M24 1C11.2964 1 1 11.2964 1 24C1 35.4775 9.40298 44.9804 20.3846 46.7205L20.3936 30.6629H14.5151V24.009H20.3936C20.3936 24.009 20.3665 20.2223 20.3936 18.5363C20.4206 16.8503 20.7542 15.2274 21.6288 13.7487C22.9722 11.4586 25.0639 10.3407 27.6335 10.0251C29.7432 9.76362 31.826 10.0521 33.9087 10.3407C34.0529 10.3587 34.125 10.3767 34.2693 10.4038C34.2693 10.4038 34.2783 10.6472 34.2693 10.8005C34.2603 12.4053 34.2693 16.0839 34.2693 16.0839C33.2685 16.0659 31.6096 15.9667 30.5096 16.138C28.6884 16.4175 27.6425 17.5806 27.6064 19.4108C27.5704 20.8354 27.5884 24.009 27.5884 24.009H33.9988L32.962 30.6629H27.5974V46.7205C38.597 44.9984 47.009 35.4775 47.009 24C47 11.2964 36.7036 1 24 1Z" fill="#0075FA"></path></svg>
+}
+export const IconDetailVideo5 = ({ width = '24px', height = '24px' }) => {
+    return <svg
+        className="cursor-pointer"
+        width={width} data-e2e="" height={height} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M24 47C36.7025 47 47 36.7025 47 24C47 11.2975 36.7025 1 24 1C11.2975 1 1 11.2975 1 24C1 36.7025 11.2975 47 24 47Z" fill="#25D366"></path><path fillRule="evenodd" clipRule="evenodd" d="M30.9028 25.6129C30.5802 25.4515 28.9944 24.6713 28.6988 24.5635C28.4031 24.4559 28.1881 24.4021 27.9731 24.7249C27.758 25.0478 27.1399 25.7744 26.9517 25.9897C26.7636 26.2049 26.5754 26.2319 26.2529 26.0704C25.9303 25.909 24.891 25.5684 23.659 24.4694C22.7002 23.6141 22.0528 22.5579 21.8647 22.235C21.6765 21.9121 21.8446 21.7375 22.0061 21.5767C22.1512 21.4321 22.3287 21.2 22.4899 21.0116C22.6512 20.8233 22.705 20.6887 22.8125 20.4735C22.92 20.2582 22.8663 20.0699 22.7855 19.9085C22.7049 19.747 22.0599 18.1593 21.7911 17.5134C21.5293 16.8845 21.2634 16.9697 21.0654 16.9598C20.8774 16.9504 20.6622 16.9484 20.4472 16.9484C20.2322 16.9484 19.8827 17.0291 19.587 17.352C19.2914 17.6749 18.4581 18.4553 18.4581 20.0428C18.4581 21.6306 19.6139 23.1643 19.7752 23.3795C19.9365 23.5949 22.0496 26.8528 25.2853 28.2499C26.0548 28.5823 26.6557 28.7807 27.1241 28.9293C27.8968 29.1749 28.5999 29.1402 29.1557 29.0572C29.7754 28.9646 31.064 28.277 31.3328 27.5235C31.6016 26.7699 31.6016 26.1242 31.521 25.9897C31.4404 25.8551 31.2253 25.7744 30.9028 25.6129ZM25.0178 33.6472H25.0134C23.0881 33.6465 21.1998 33.1292 19.5524 32.1517L19.1606 31.9191L15.0998 32.9844L16.1837 29.0251L15.9286 28.6191C14.8546 26.9109 14.2873 24.9365 14.2881 22.9091C14.2905 16.9934 19.1037 12.1805 25.022 12.1805C27.8879 12.1815 30.5817 13.299 32.6076 15.3271C34.6333 17.3551 35.7482 20.0509 35.7471 22.9178C35.7447 28.8339 30.9315 33.6472 25.0178 33.6472ZM34.1489 13.7858C31.7117 11.3458 28.4706 10.0014 25.0173 10C17.902 10 12.111 15.7906 12.1082 22.908C12.1073 25.1832 12.7017 27.4039 13.8313 29.3617L12 36.0509L18.8432 34.2559C20.7287 35.2843 22.8516 35.8264 25.0121 35.827H25.0174H25.0174C32.132 35.827 37.9234 30.0359 37.9263 22.9184C37.9276 19.4691 36.5861 16.2258 34.1489 13.7858Z" fill="white"></path></svg>
+}

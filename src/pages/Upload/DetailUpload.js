@@ -195,7 +195,7 @@ function DetailUpload() {
                     )}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
