@@ -17,7 +17,7 @@ function VideoExploreCard({ video }) {
         }
     }
     return (
-        <div className="w-[288px] h-[426px] flex gap-6">
+        <div className="w-full h-[426px] flex gap-6">
             <div
                 onMouseEnter={() => setIsHoverVideo(true)}
                 onMouseLeave={() => setIsHoverVideo(false)}

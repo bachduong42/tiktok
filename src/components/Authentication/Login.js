@@ -81,7 +81,7 @@ function Login({ onClose, onToggle }) {
     }
     return (
         <div>
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-500"></div>
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-50"></div>
             <div
                 className="fixed inset-0 flex w-full h-screen justify-center items-center text-center z-1000"
                 onClick={handleClose}

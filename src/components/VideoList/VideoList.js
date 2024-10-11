@@ -13,7 +13,13 @@ function VideoList({ path, explore }) {
         try {
             const videoData = await getVideoList(path, pageNumber);
             if (videoData && videoData.data) {
-                setVideos(prevVideos => [...prevVideos, ...Object.values(videoData.data)]);
+                setVideos((prevVideos) => {
+                    const newVideos = [...prevVideos, ...Object.values(videoData.data)];
+                    const uniqueVideos = newVideos.filter((video, index, self) =>
+                        index === self.findIndex((v) => v.id === video.id)
+                    );
+                    return uniqueVideos;
+                });
             }
         } catch (error) {
             console.error("Failed to fetch videos:", error);
@@ -23,7 +29,6 @@ function VideoList({ path, explore }) {
     };
 
     useEffect(() => {
-
         fetchVideos(page);
     }, [page]);
 
@@ -42,10 +47,10 @@ function VideoList({ path, explore }) {
     }, [loading]);
 
     return (
-        <div className={`w-full grid  ${explore ? 'grid-cols-4 gap-[30px]' : 'grid-cols-1 gap-[50px]'} justify-items-center`}>
+        <div className={`w-full grid  ${explore ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-[30px]' : 'grid-cols-1 gap-[50px]'} justify-items-center`}>
             {
                 videos.map((video) => (
-                    <div className="video-card" key={video.id}>
+                    <div className="video-card w-full justify-center flex" key={video.id} >
                         {explore ? <VideoExploreCard video={video}></VideoExploreCard> : <VideoCard video={video}></VideoCard>}
                     </div>
                 ))
