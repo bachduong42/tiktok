@@ -9,13 +9,17 @@ function VideoExploreCard({ video }) {
     const [isHover, setIsHover] = useState(false);
     const [isHoverVideo, setIsHoverVideo] = useState(false);
     const videoRef = useRef(null);
+    let hoverTimeout;
     const handleMouseEnter = () => {
-        setIsHoverVideo(true);
-        if (videoRef.current) {
-            videoRef.current.play();
-        }
+        hoverTimeout = setTimeout(() => {
+            setIsHoverVideo(true);
+            if (videoRef.current) {
+                videoRef.current.play();
+            }
+        }, 200);
     };
     const handleMouseLeave = () => {
+        clearTimeout(hoverTimeout);
         setIsHoverVideo(false);
         if (videoRef.current) {
             videoRef.current.pause();

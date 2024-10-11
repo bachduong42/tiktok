@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MdClose, MdMoreHoriz, MdOutlineMusicNote } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVideo } from "~/services/getVideo";
 import Button from "../Button";
-import { CommentIcon, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
-import { getComment } from "~/services/comment";
+import { CommentIcon, CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
+import { createComment, getComment } from "~/services/comment";
 import CommentItem from "../Comment";
 
 function DetailVideo() {
@@ -13,7 +13,9 @@ function DetailVideo() {
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
-    console.log("id:", uuid)
+    const [commentValue, setCommentValue] = useState("");
+
+    // console.log("id:", uuid)
     const fetchDetailVideo = useCallback(async () => {
         setLoading(true)
         const videoData = await getVideo(uuid);
@@ -34,6 +36,17 @@ function DetailVideo() {
 
     const handleClose = () => {
         navigate('/explore')
+    }
+    const handleInsertComment = async () => {
+        try {
+            const res = await createComment(commentValue, uuid);
+            setCommentValue("");
+
+            fetchComments();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -62,8 +75,8 @@ function DetailVideo() {
                             <div className="flex gap-2">
                                 <img src={video.user.avatar} alt="" className="w-[40px] h-[40px] rounded-full" />
                                 <div className="flex flex-col gap-1">
-                                    <div className="font-bold text-[20px] text-start display-text leading-5">{video.user.nickname}</div>
-                                    <div className="text-[14px] text-[#161823] leading-4">{video.user.first_name + ' ' + video.user.last_name}</div>
+                                    <div className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
+                                    <div className="text-[14px] text-[#161823] leading-4 text-start">{video.user.first_name + ' ' + video.user.last_name}</div>
                                 </div>
                             </div>
                             <Button primary className="font-bold">Follow</Button>
@@ -107,13 +120,30 @@ function DetailVideo() {
                 </div>
                 <div className="w-full px-4">
                     <div className="w-full h-[32px] border-b-2 border-black font-bold">Comments({video.comments_count})</div>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3 h-[400px] overflow-y-auto pt-2">
                         {
                             comments &&
-                            comments.map((comment) => {
-                                <CommentItem key={comment.id} comment={comment}></CommentItem>
-                            })
+                            comments.map((comment) => (
+                                <CommentItem key={comment.id} comment={comment} fetchComments={fetchComments}></CommentItem>
+                            ))
                         }
+                    </div>
+                    <div className="w-full h-[80px] px-6 py-3 border-t-2 flex items-center">
+                        <div className="w-11/12 h-[40px] relative flex flex-row  bg-[#1618230f] rounded-lg px-[9px] cursor-text border-transparent items-center">
+                            <input
+                                type="text"
+                                value={commentValue}
+                                onChange={(e) => setCommentValue(e.target.value)}
+                                className="w-full h-full bg-transparent outline-none" />
+                            <div className="flex gap-2 absolute right-2 items-center">
+                                <CommentIcon1></CommentIcon1>
+                                <CommentIcon2></CommentIcon2>
+                            </div>
+                        </div>
+                        <button
+                            onClick={handleInsertComment}
+                            disabled={!commentValue}
+                            className={`w-1/12 font-bold text-[14px] leading-10 pl-2 ${commentValue ? 'text-[#fe2c55]' : 'text-[#16182357]'}`}>POST</button>
                     </div>
                 </div>
 
