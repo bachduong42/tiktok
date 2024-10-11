@@ -1,14 +1,26 @@
 import { MdMoreHoriz } from "react-icons/md";
 import { useRef, useState } from "react";
 import { MuteIcon, VolumnIcon } from "../Icons/Icons";
+import { useNavigate } from "react-router-dom";
 
 function VideoExploreCard({ video }) {
     const [volume, setVolume] = useState(0);
-
+    const navigate = useNavigate();
     const [isHover, setIsHover] = useState(false);
     const [isHoverVideo, setIsHoverVideo] = useState(false);
     const videoRef = useRef(null);
-
+    const handleMouseEnter = () => {
+        setIsHoverVideo(true);
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
+    };
+    const handleMouseLeave = () => {
+        setIsHoverVideo(false);
+        if (videoRef.current) {
+            videoRef.current.pause();
+        }
+    };
     const handleChangeVolume = (e) => {
         const newVolume = parseFloat(e.target.value);
         setVolume(newVolume);
@@ -16,15 +28,19 @@ function VideoExploreCard({ video }) {
             videoRef.current.volume = newVolume;
         }
     }
+    const openDetailVideo = (uuid) => {
+        console.log("Click video")
+        navigate(`/videos/${uuid}`);
+    }
     return (
-        <div className="w-[288px] h-[426px] flex gap-6">
+        <div className="w-full h-[426px] flex gap-6">
             <div
-                onMouseEnter={() => setIsHoverVideo(true)}
-                onMouseLeave={() => setIsHoverVideo(false)}
+                onClick={() => openDetailVideo(video.uuid)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
                 className="flex gap-5 w-full h-full relative bg-white cursor-pointer">
                 <video
                     ref={videoRef}
-                    autoPlay
                     loop
                     muted={volume === 0}
                     className="w-full h-full object-cover block rounded-[20px]">

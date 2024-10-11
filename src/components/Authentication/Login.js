@@ -3,9 +3,9 @@ import * as FaIcon from "react-icons/fa";
 import Button from "../Button";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
-import { loginService } from "~/services/loginService";
+import { loginService } from "~/services/authService";
 import { UserContext } from "~/contexts/UserContext";
-import getCurrentUser from "~/services/getCurrentUser";
+import { getCurrentUser } from "~/services/getUser";
 
 function Login({ onClose, onToggle }) {
     const [showPass, setShowPass] = useState(false);
@@ -81,7 +81,7 @@ function Login({ onClose, onToggle }) {
     }
     return (
         <div>
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-500"></div>
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-50"></div>
             <div
                 className="fixed inset-0 flex w-full h-screen justify-center items-center text-center z-1000"
                 onClick={handleClose}

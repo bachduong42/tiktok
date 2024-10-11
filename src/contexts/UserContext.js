@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import getCurrentUser from "~/services/getCurrentUser";
+import { getCurrentUser } from "~/services/getUser";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [loading, setLoading] = useState(false)
 
     const login = (user) => {

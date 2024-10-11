@@ -119,7 +119,7 @@ function Header() {
     ])
 
     return (
-        <div className=" w-full h-[60px] flex border-header fixed bg-white z-100 top-0 left-0">
+        <div className=" w-full h-[60px] flex border-header fixed bg-white z-20 top-0 left-0">
             <div div className="w-full h-full flex flex-row justify-between text-center items-center px-[16px] pr-[24px]" >
                 <Link to={config.routes.home} className="cursor-pointer w-[300px]" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="118" height="42" fill="currentColor" alt="TikTok">

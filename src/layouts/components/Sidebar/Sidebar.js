@@ -9,7 +9,6 @@ import sidebarImage from "~/assets/images/sidebarImage.png"
 import FollowingAccounts from "~/components/FollowingAccounts";
 import { useContext, useState } from "react";
 import { UserContext } from "~/contexts/UserContext";
-import Login from "~/components/Authentication/Login";
 import AuthModal from "~/components/Authentication";
 
 function Sidebar() {
@@ -17,8 +16,8 @@ function Sidebar() {
     const [openDialogLogin, setOpenDialogLogin] = useState(false);
 
     return (
-        <div className="lg:w-1/6 w-[72px] lg:border-none border border-r-[1px] border-[#1618231f] border-header
-            flex flex-col pt-3 pb-[26px] pl-2 mb-2 fixed top-0 left-0 mt-[60px] overflow-y-auto h-screen sidebar z-10">
+        <div className={`lg:w-1/6 w-[72px] lg:border-none border border-r-[1px] border-[#1618231f] border-header
+            flex flex-col pt-3 pb-[26px] pl-2 mb-2 fixed top-0 left-0 mt-[60px] overflow-y-auto h-screen sidebar ${openDialogLogin ? 'z-20' : 'z-10'} bg-white`}>
             <div className="flex flex-col -z-50">
                 <Menu>
                     <MenuItem title="For You" to={config.routes.home} icon={<HomeIcon></HomeIcon>} activeIcon={<HomeIconActive></HomeIconActive>}></MenuItem>
@@ -36,10 +35,10 @@ function Sidebar() {
                 <hr className="my-3" />
                 {user ? (
 
-                    <FollowingAccounts label="Following Accounts"></FollowingAccounts>
+                    <FollowingAccounts label="Suggested Accounts"></FollowingAccounts>
 
                 ) :
-                    <div className="flex flex-col  w-[208px] px-2 gap-3 ">
+                    <div className="hidden lg:flex flex-col  w-[208px] px-2 gap-3 ">
                         <span className="text-[#16182380] text-base leading-[21px] text-start">Log in to follow creators, like videos, and view comments.</span>
                         <Button
                             onClick={() => setOpenDialogLogin(true)}

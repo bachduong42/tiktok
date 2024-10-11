@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getCurrentUser from "~/services/getCurrentUser";
+import { getCurrentUser } from "~/services/getUser";
 import ProfileUser from "~/components/Profile";
 function MyProfile() {
     const [myInfo, setMyInfo] = useState({});
@@ -15,7 +15,7 @@ function MyProfile() {
     }, []);
     return (
         // <>helo</>
-        <ProfileUser myInfo={myInfo}></ProfileUser>
+        <ProfileUser myInfo={myInfo} ></ProfileUser>
     );
 }
 
