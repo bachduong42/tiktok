@@ -3,9 +3,9 @@ import * as FaIcon from "react-icons/fa";
 import Button from "../Button";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
-import { loginService } from "~/services/loginService";
+import { loginService } from "~/services/authService";
 import { UserContext } from "~/contexts/UserContext";
-import getCurrentUser from "~/services/getCurrentUser";
+import { getCurrentUser } from "~/services/getUser";
 
 function Login({ onClose, onToggle }) {
     const [showPass, setShowPass] = useState(false);

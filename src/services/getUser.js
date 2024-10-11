@@ -12,6 +12,16 @@ const getCurrentUser = async () => {
         throw error
     }
 }
-export default getCurrentUser
+
+const getAnUserById = async (id) => {
+    try {
+        const res = await httpRequest.get(`/users/@${id}`);
+        return res.data.data;
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+export { getCurrentUser, getAnUserById }
 
 

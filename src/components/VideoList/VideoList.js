@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import getVideoList from "~/services/getVideoList"
+import { useCallback, useEffect, useState } from "react";
+import { getVideoList } from "~/services/getVideo"
 import VideoCard from "./VideoCard";
 import VideoExploreCard from "./VideoExploreCard";
 
@@ -8,7 +8,7 @@ function VideoList({ path, explore }) {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    const fetchVideos = async (pageNumber) => {
+    const fetchVideos = useCallback(async (pageNumber) => {
         setLoading(true);
         try {
             const videoData = await getVideoList(path, pageNumber);
@@ -26,25 +26,25 @@ function VideoList({ path, explore }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, [path]);
 
     useEffect(() => {
         fetchVideos(page);
-    }, [page]);
+    }, [page, fetchVideos]);
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
         if (loading) return;
         const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
         if (nearBottom) {
-            setPage(prevPage => prevPage + 1);
+            setPage((prevPage) => prevPage + 1);
         }
-    };
+    }, [loading]);
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [loading]);
+    }, [handleScroll]);
 
     return (
         <div className={`w-full grid  ${explore ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-[30px]' : 'grid-cols-1 gap-[50px]'} justify-items-center`}>

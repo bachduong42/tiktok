@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import AccountItem from './AccountItem';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { suggestUserList } from '~/services/suggestUser';
 
 function FollowingAccounts({ label }) {
@@ -11,11 +11,11 @@ function FollowingAccounts({ label }) {
     const [hasMore, setHasMore] = useState(true);
 
 
-    const fetchAccounts = async (page) => {
+    const fetchAccounts = useCallback(async (page) => {
         setLoading(true);
         try {
             const accountData = await suggestUserList(page, perPage);
-            console.log("data:", accountData)
+            // console.log("data:", accountData)
             if (accountData) {
                 setAccounts(prevAccounts => {
                     const newAccounts = [...prevAccounts, ...accountData];
@@ -24,7 +24,7 @@ function FollowingAccounts({ label }) {
                     );
                     return uniqueAccounts;
                 });
-                console.log("accounts:", accounts)
+                // console.log("accounts:", accounts)
                 if (accountData.length < perPage) {
                     setHasMore(false);
                 }
@@ -34,11 +34,14 @@ function FollowingAccounts({ label }) {
         } finally {
             setLoading(false);
         }
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [perPage]);
+
 
     useEffect(() => {
         fetchAccounts(page);
-    }, [page]);
+    }, [page, fetchAccounts]);
+
     const handleLoadMore = () => {
         if (!loading && hasMore) {
             setPage((prevPage) => prevPage + 1);

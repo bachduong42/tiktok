@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import Image from "../Image";
 import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
 import UserToolTip from "../Popper/UserToolTip";
+import { useNavigate } from "react-router-dom";
 
 function VideoCard({ video }) {
     const [volume, setVolume] = useState(0);
@@ -11,6 +12,8 @@ function VideoCard({ video }) {
     const [isHoverVideo, setIsHoverVideo] = useState(false);
     const [showUser, setShowUser] = useState(false);
     const videoRef = useRef(null);
+    const navigate = useNavigate();
+
     const toggleShowMore = () => {
         setShowMore(prev => !prev);
     };
@@ -30,13 +33,25 @@ function VideoCard({ video }) {
         setVolume(0)
         videoRef.current.volume = 0;
     }
+    const handleGetUser = async (nickname) => {
+        try {
+            navigate(`/${nickname}`);
+        } catch (error) {
+            console.log("Lỗi không tìm thấy người dùng");
+        }
+
+
+    }
+    
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
             <div
+               
                 onMouseEnter={() => setIsHoverVideo(true)}
                 onMouseLeave={() => setIsHoverVideo(false)}
                 className="flex gap-5 w-[354px] h-[629px] relative bg-white cursor-pointer">
                 <video
+
                     ref={videoRef}
                     autoPlay
                     loop
@@ -93,6 +108,7 @@ function VideoCard({ video }) {
                 <div className="relative w-[48px] h-[48px] justify-center items-center mb-6">
                     <UserToolTip video={video} showUser={showUser} handleHideResult={handleHideResult} setShowUser={setShowUser}>
                         <Image
+                            onClick={() => handleGetUser(video.user.nickname)}
                             src={video.user.avatar}
                             alt=""
                             className="w-[48px] h-[48px] rounded-[90px] cursor-pointer"

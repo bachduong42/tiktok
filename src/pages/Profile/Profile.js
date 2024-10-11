@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import getCurrentUser from "~/services/getCurrentUser";
+import { getAnUserById } from "~/services/getUser";
 import ProfileUser from "~/components/Profile";
+import { useParams } from "react-router-dom";
 function Profile() {
-    // const [myInfo, setMyInfo] = useState({});
+    const [profile, setProfile] = useState({});
+    const { nickname } = useParams();
 
-    // useEffect(() => {
-    //     const fetchApi = async () => {
-    //         const result = await getCurrentUser();
-    //         console.log(result)
-    //         if (result) {
-    //             setMyInfo(result);
-    //         }
-    //     };
-    //     fetchApi();
-    // }, []);
+    console.log(nickname);
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result = await getAnUserById(nickname);
+            // console.log(result)
+            if (result) {
+                setProfile(result);
+            }
+        };
+        fetchApi();
+    }, [nickname]);
     return (
-        <ProfileUser></ProfileUser>
+        <ProfileUser myInfo={profile} profile></ProfileUser>
     );
 }
 
