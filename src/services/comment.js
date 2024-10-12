@@ -30,6 +30,23 @@ const createComment = async (comment, id) => {
         throw error
     }
 }
+const updateComment = async (comment, id) => {
+    try {
+        const res = await httpRequest.patch(`comments/${id}`,
+            {
+                comment: comment
+            }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+
+        return res.data.data
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
 const deleteComment = async (id) => {
     try {
         const res = await httpRequest.delete(`comments/${id}`,
@@ -45,4 +62,4 @@ const deleteComment = async (id) => {
         throw error
     }
 }
-export { getComment, createComment, deleteComment }
+export { getComment, createComment, deleteComment, updateComment }

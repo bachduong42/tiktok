@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdClose, MdMoreHoriz, MdOutlineMusicNote } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVideo } from "~/services/getVideo";
 import Button from "../Button";
 import { CommentIcon, CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
-import { createComment, getComment } from "~/services/comment";
+import { createComment, getComment, updateComment } from "~/services/comment";
 import CommentItem from "../Comment";
+import noImage from "~/assets/images/noimage.jpg";
 
 function DetailVideo() {
     const { uuid } = useParams();
@@ -14,14 +15,18 @@ function DetailVideo() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
     const [commentValue, setCommentValue] = useState("");
-
+    const [editComment, setEditComment] = useState(null);
     // console.log("id:", uuid)
+
     const fetchDetailVideo = useCallback(async () => {
         setLoading(true)
         const videoData = await getVideo(uuid);
         setVideo(videoData);
         setLoading(false)
     }, [uuid]);
+    const avatarUrl = (video.user && video.user.avatar === "https://files.fullstack.edu.vn/f8-tiktok/")
+        ? noImage
+        : (video.user ? video.user.avatar : noImage);
     const fetchComments = useCallback(async () => {
         setLoading(true)
         const commentData = await getComment(uuid);
@@ -39,15 +44,23 @@ function DetailVideo() {
     }
     const handleInsertComment = async () => {
         try {
-            const res = await createComment(commentValue, uuid);
+            if (editComment) {
+                await updateComment(commentValue, editComment.id);
+            } else {
+                await createComment(commentValue, uuid);
+            }
             setCommentValue("");
-
+            setEditComment(null);
             fetchComments();
         }
         catch (error) {
             console.log(error);
         }
     }
+    const handleEditComment = (comment) => {
+        setEditComment(comment);
+        setCommentValue(comment.comment);
+    };
 
     return (
         <div className="w-full flex h-screen">
@@ -73,7 +86,7 @@ function DetailVideo() {
                     {video.user && (
                         <div className="flex justify-between">
                             <div className="flex gap-2">
-                                <img src={video.user.avatar} alt="" className="w-[40px] h-[40px] rounded-full" />
+                                <img src={avatarUrl} alt="" className="w-[40px] h-[40px] rounded-full" />
                                 <div className="flex flex-col gap-1">
                                     <div className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
                                     <div className="text-[14px] text-[#161823] leading-4 text-start">{video.user.first_name + ' ' + video.user.last_name}</div>
@@ -124,7 +137,11 @@ function DetailVideo() {
                         {
                             comments &&
                             comments.map((comment) => (
-                                <CommentItem key={comment.id} comment={comment} fetchComments={fetchComments}></CommentItem>
+                                <CommentItem
+                                    key={comment.id} comment={comment}
+                                    fetchComments={fetchComments}
+                                    onEdit={() => handleEditComment(comment)}
+                                ></CommentItem>
                             ))
                         }
                     </div>
@@ -143,7 +160,9 @@ function DetailVideo() {
                         <button
                             onClick={handleInsertComment}
                             disabled={!commentValue}
-                            className={`w-1/12 font-bold text-[14px] leading-10 pl-2 ${commentValue ? 'text-[#fe2c55]' : 'text-[#16182357]'}`}>POST</button>
+                            className={`w-1/12 font-bold text-[14px] leading-10 pl-2 ${commentValue ? 'text-[#fe2c55]' : 'text-[#16182357]'}`}>
+                            {editComment ? "UPDATE" : "POST"}
+                        </button>
                     </div>
                 </div>
 

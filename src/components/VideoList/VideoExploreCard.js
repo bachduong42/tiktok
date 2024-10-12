@@ -1,5 +1,5 @@
 import { MdMoreHoriz } from "react-icons/md";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MuteIcon, VolumnIcon } from "../Icons/Icons";
 import { useNavigate } from "react-router-dom";
 
@@ -13,8 +13,8 @@ function VideoExploreCard({ video }) {
     const handleMouseEnter = () => {
         hoverTimeout = setTimeout(() => {
             setIsHoverVideo(true);
-            if (videoRef.current) {
-                videoRef.current.play();
+            if (videoRef.current && !videoRef.current.paused) {
+                videoRef.current.play().catch(error => console.log(error));
             }
         }, 200);
     };
@@ -32,6 +32,11 @@ function VideoExploreCard({ video }) {
             videoRef.current.volume = newVolume;
         }
     }
+    useEffect(() => {
+        if (isHoverVideo && videoRef.current) {
+            videoRef.current.play().catch(error => console.log(error));
+        }
+    }, [isHoverVideo]);
     const openDetailVideo = (uuid) => {
         console.log("Click video")
         navigate(`/videos/${uuid}`);

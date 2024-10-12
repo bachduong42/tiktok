@@ -1,11 +1,12 @@
 import noImage from "~/assets/images/noimage.jpg";
 import { LikedIcon } from "../Icons/Icons";
-import { MdMoreHoriz } from "react-icons/md";
+import { MdEditSquare, MdMoreHoriz, MdOutlineDeleteOutline, MdOutlineFlag } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Tippy from '@tippyjs/react/headless';
 import { getCurrentUser } from "~/services/getUser";
 import { deleteComment } from "~/services/comment";
-function CommentItem({ comment, fetchComments }) {
+import Button from "../Button";
+function CommentItem({ comment, fetchComments, onEdit }) {
     const [showMenu, setShowMenu] = useState(false);
     const [showMore, setShowMore] = useState(false);
     const [user, setUser] = useState(null);
@@ -20,7 +21,6 @@ function CommentItem({ comment, fetchComments }) {
         const fetchUser = async () => {
             const currentUser = await getCurrentUser();
             setUser(currentUser);
-            // Check if the comment belongs to the current user
             if (currentUser && comment.user.id === currentUser.id) {
                 setIsMyComment(true);
             }
@@ -40,7 +40,7 @@ function CommentItem({ comment, fetchComments }) {
         <div
             onMouseEnter={() => setShowMore(true)}
             onMouseLeave={() => setShowMore(false)}
-            className="w-full justify-between flex px-3 py-2">
+            className="w-full justify-between flex px-2 py-2">
             <div className="flex flex-row w-9/10 gap-3">
                 <img src={avatarUrl} alt="" className="w-[40px] h-[40px] object-cover rounded-full" />
                 <div className="flex flex-col text-start gap-1">
@@ -54,29 +54,41 @@ function CommentItem({ comment, fetchComments }) {
                 <Tippy
                     onClickOutside={handleOnClickOutSide}
                     interactive
+                    placement="bottom-end"
                     visible={showMenu}
                     render={(attrs) => (
-                        <div className="bg-white shadow-lg rounded-md p-2" {...attrs}>
-                            <ul className="flex flex-col text-start">
+                        <div className="bg-white w-[150px] shadow-lg rounded-md" {...attrs}>
+                            <div className="flex flex-col text-start">
                                 {isMyComment ?
-                                    <li
-                                        className="cursor-pointer py-1 hover:text-[#fe2c55] text-[13px] font-bold"
-                                        onClick={handleDeleteComment}
-                                    >
-                                        Delete Comment
-                                    </li>
+                                    <>
+                                        <Button
+                                            leftIcon={<MdEditSquare />}
+                                            className="cursor-pointer py-1 hover:text-[#fe2c55] text-[13px] font-bold"
+                                            onClick={() => onEdit(comment)}
+                                        >
+                                            Edit
+                                        </Button>
+                                        <Button
+                                            leftIcon={<MdOutlineDeleteOutline />}
+                                            className="cursor-pointer py-1 hover:text-[#fe2c55] text-[13px] font-bold"
+                                            onClick={handleDeleteComment}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </>
                                     :
-                                    <li
+                                    <Button
+                                        leftIcon={<MdOutlineFlag />}
                                         className="cursor-pointer py-1 hover:text-[#fe2c55] text-[14px] font-bold"
                                         onClick={() => {
                                         }}
                                     >
                                         Report
-                                    </li>
+                                    </Button>
                                 }
 
 
-                            </ul>
+                            </div>
                         </div>
                     )}
                 >

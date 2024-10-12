@@ -5,7 +5,7 @@ import VideoExploreCard from "./VideoExploreCard";
 
 function VideoList({ path, explore }) {
     const [videos, setVideos] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(2);
     const [loading, setLoading] = useState(false);
 
     const fetchVideos = useCallback(async (pageNumber) => {
