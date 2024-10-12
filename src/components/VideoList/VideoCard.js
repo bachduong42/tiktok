@@ -1,10 +1,12 @@
 import { MdAdd, MdCheck, MdMoreHoriz, MdMusicNote } from "react-icons/md";
-import { useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import Image from "../Image";
 import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
 import UserToolTip from "../Popper/UserToolTip";
 import { useNavigate } from "react-router-dom";
 import ModalComment from "../Comment/ModalComment";
+import { likeVideo, unLikeVideo } from "~/services/like";
+import { getVideo } from "~/services/getVideo";
 
 function VideoCard({ video }) {
     const [volume, setVolume] = useState(0);
@@ -15,6 +17,9 @@ function VideoCard({ video }) {
     const [showModalComment, setShowModalComment] = useState(false);
     const videoRef = useRef(null);
     const navigate = useNavigate();
+    const [like, setLike] = useState(video.is_liked);
+    const [countLikes, setCountLikes] = useState(video.likes_count);
+
 
     const toggleShowMore = () => {
         setShowMore(prev => !prev);
@@ -42,9 +47,32 @@ function VideoCard({ video }) {
             console.log("Lỗi không tìm thấy người dùng");
         }
     }
+
     const toggleModalComment = () => {
         setShowModalComment(prev => !prev);
     };
+
+
+    const handleLikeVideo = async () => {
+        if (like) {
+            const res = await unLikeVideo(video.id);
+
+            console.log('Unlike response:', res);
+            setLike(false);
+            setCountLikes(countLikes - 1);
+        } else {
+            const res = await likeVideo(video.id);
+            console.log('Like response:', res);
+            setLike(true);
+            setCountLikes(countLikes + 1);
+        }
+
+    }
+    useEffect(() => {
+        setLike(video.is_liked);
+    }, [video]);
+    console.log(`trang thai cua1 : ${video.user.nickname}`, video.is_liked);
+    console.log(`trang thai cua2 : ${video.user.nickname}`, video.likes_count);
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
             <div
@@ -53,7 +81,6 @@ function VideoCard({ video }) {
                 onMouseLeave={() => setIsHoverVideo(false)}
                 className="flex gap-5 w-[354px] h-[629px] relative bg-white cursor-pointer">
                 <video
-
                     ref={videoRef}
                     autoPlay
                     loop
@@ -128,10 +155,12 @@ function VideoCard({ video }) {
                     }
                 </div>
                 <div className="flex flex-col mb-2">
-                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        {video.is_liked ? <IsLikeIcon width="24px" height="24px"></IsLikeIcon> : <UnLikeIcon width="24px" height="24px" />}
+                    <button
+                        onClick={handleLikeVideo}
+                        className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
+                        {like ? <IsLikeIcon width="24px" height="24px"></IsLikeIcon> : <UnLikeIcon width="24px" height="24px" />}
                     </button>
-                    <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
+                    <span className="text-xs leading-4 text-[#161823bf]">{countLikes}</span>
                 </div>
                 <div className="flex flex-col mb-2">
                     <button
