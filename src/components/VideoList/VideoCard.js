@@ -4,6 +4,7 @@ import Image from "../Image";
 import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
 import UserToolTip from "../Popper/UserToolTip";
 import { useNavigate } from "react-router-dom";
+import ModalComment from "../Comment/ModalComment";
 
 function VideoCard({ video }) {
     const [volume, setVolume] = useState(0);
@@ -11,6 +12,7 @@ function VideoCard({ video }) {
     const [isHover, setIsHover] = useState(false);
     const [isHoverVideo, setIsHoverVideo] = useState(false);
     const [showUser, setShowUser] = useState(false);
+    const [showModalComment, setShowModalComment] = useState(false);
     const videoRef = useRef(null);
     const navigate = useNavigate();
 
@@ -39,14 +41,14 @@ function VideoCard({ video }) {
         } catch (error) {
             console.log("Lỗi không tìm thấy người dùng");
         }
-
-
     }
-    
+    const toggleModalComment = () => {
+        setShowModalComment(prev => !prev);
+    };
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
             <div
-               
+
                 onMouseEnter={() => setIsHoverVideo(true)}
                 onMouseLeave={() => setIsHoverVideo(false)}
                 className="flex gap-5 w-[354px] h-[629px] relative bg-white cursor-pointer">
@@ -127,29 +129,32 @@ function VideoCard({ video }) {
                 </div>
                 <div className="flex flex-col mb-2">
                     <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        {video.is_liked ? <IsLikeIcon></IsLikeIcon> : <UnLikeIcon />}
+                        {video.is_liked ? <IsLikeIcon width="24px" height="24px"></IsLikeIcon> : <UnLikeIcon width="24px" height="24px" />}
                     </button>
                     <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
                 </div>
                 <div className="flex flex-col mb-2">
-                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <CommentIcon></CommentIcon>
+                    <button
+                        onClick={() => setShowModalComment(true)}
+                        className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
+                        <CommentIcon width="35px" height="35px" className="text-[21px]"></CommentIcon>
                     </button>
                     <span className="text-xs leading-4 text-[#161823bf]">{video.comments_count}</span>
                 </div>
                 <div className="flex flex-col mb-2">
                     <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <SaveIcon></SaveIcon>
+                        <SaveIcon width="24px" height="24px" className="text-[21px]"></SaveIcon>
                     </button>
                     <span className="text-xs leading-4 text-[#161823bf]">0</span>
                 </div>
                 <div className="flex flex-col ">
                     <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <ShareIcon></ShareIcon>
+                        <ShareIcon width="24px" height="24px" className="text-[21px]"></ShareIcon>
                     </button>
                     <span className="text-xs leading-4 text-[#161823bf]">{video.shares_count}</span>
                 </div>
             </div>
+            <ModalComment isOpen={showModalComment} onClose={toggleModalComment} video={video} />
         </div>
     );
 }

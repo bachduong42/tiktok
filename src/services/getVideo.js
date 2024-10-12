@@ -25,7 +25,8 @@ const getUserVideos = async (id) => {
 const getVideo = async (id) => {
     try {
         const res = await httpRequest.get(`videos/${id}`)
-        return res.data
+
+        return res.data.data
     } catch (error) {
         console.log(error)
         throw error

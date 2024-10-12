@@ -2,9 +2,21 @@
 import Image from '../Image';
 import ava from "~/assets/images/ava.jpg"
 import { CheckFollow } from '../Icons/Icons';
+import { useNavigate } from 'react-router-dom';
 function AccountItem({ account }) {
+    const navigate = useNavigate();
+
+    const handleGetUser = async (nickname) => {
+        try {
+            navigate(`/${nickname}`);
+        } catch (error) {
+            console.log("Lỗi không tìm thấy người dùng");
+        }
+    }
     return (
-        <div className='flex gap-3 p-2 flex-row w-full items-center rounded-[4px] bg-white hover:bg-[#16182308]'>
+        <div
+            onClick={() => handleGetUser(account.nickname)}
+            className='flex gap-3 p-2 flex-row w-full items-center rounded-[4px] bg-white hover:bg-[#16182308] cursor-pointer'>
             <Image src={account.avatar} alt={ava} className="w-[32px] h-[32px] rounded-[90px]"></Image>
             <div className='lg:flex hidden flex-col items-start '>
                 <div className='flex gap-1'>
