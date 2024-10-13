@@ -25,7 +25,6 @@ function ButtonList({ video, onLikeToggle, showModalComment, detail }) {
                     onClick={showModalComment}
                     className={`${detail ? "w-[30px] h-[30px]" : "w-[48px] h-[48px]"} bg-[#1618230f] rounded-[90px] items-center flex justify-center`}>
                     <CommentIcon
-                        // width={detail ? "17px" : "24px"} height={detail ? "17px" : "24px"}
                         className={`${detail ? "" : "text-[21px]"}`} />
                 </button>
                 <span className="text-xs leading-4 text-[#161823bf]">{video.comments_count}</span>

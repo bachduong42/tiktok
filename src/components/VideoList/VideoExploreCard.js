@@ -1,9 +1,11 @@
 import { MdMoreHoriz } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MuteIcon, VolumnIcon } from "../Icons/Icons";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "~/contexts/UserContext";
 
-function VideoExploreCard({ video }) {
+function VideoExploreCard({ video, isLogin, showModalLogin, backprofile }) {
+
     const [volume, setVolume] = useState(0);
     const navigate = useNavigate();
     const [isHover, setIsHover] = useState(false);
@@ -38,8 +40,12 @@ function VideoExploreCard({ video }) {
         }
     }, [isHoverVideo]);
     const openDetailVideo = (uuid) => {
+        if (isLogin == null) {
+            showModalLogin()
+            return;
+        }
         console.log("Click video")
-        navigate(`/videos/${uuid}`);
+        navigate(`/videos/${uuid}`, { state: backprofile });
     }
     return (
         <div className="w-full h-[426px] flex gap-6">

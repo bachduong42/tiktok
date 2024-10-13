@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import noImage from "../../assets/images/noimage.jpg"
 import Button from "~/components/Button";
 import { LockIcon, NoContentIcon, ProfileLeftFavoritesIcon, ProfileLeftLikedIcon, ProfileLeftRepostsIcon, ProfileLeftVideoIcon, SettingIcon, ShareProfile } from "~/components/Icons/Icons";
@@ -6,33 +6,65 @@ import EditMyProfile from "./EditMyProfile";
 import { MdMoreHoriz } from "react-icons/md";
 import { getUserVideos } from "~/services/getVideo";
 import VideoExploreCard from "../VideoList/VideoExploreCard";
+import { followService, unFollowService } from "~/services/follow";
+import AuthModal from "../Authentication";
+import ModalFollowingAccount from "../FollowingAccounts/ModalFollowingAccount";
 
 function ProfileUser({ myInfo, profile }) {
     const [videos, setVideos] = useState([])
-    const [openEditProfile, setOpenEditProfile] = useState(false)
+    const [openEditProfile, setOpenEditProfile] = useState(false);
+    const [isFollow, setIsFollow] = useState(myInfo.is_followed);
+    const [followCount, setFollowCount] = useState(myInfo.followers_count);
     const userAvatar = myInfo && myInfo.avatar && myInfo.avatar !== 'https://files.fullstack.edu.vn/f8-tiktok/'
         ? myInfo.avatar
         : noImage;
     const [activeCity, setActiveCity] = useState("Videos");
+    const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin'));
+    const [showLogin, setShowLogin] = useState(false);
+    const [openModalFollowing, setOpenModalFollowing] = useState(false);
     const handleChangeTab = (cityName) => {
         setActiveCity(cityName);
     }
-    const fetchVideos = async () => {
+    // console.log(myInfo);
+    const fetchVideos = useCallback(async () => {
         try {
-            console.log(myInfo.id)
             const videoData = await getUserVideos(myInfo.id);
             setVideos(videoData.data);
-            console.log(videoData.data)
         } catch (error) {
-            console.error("Failed to fetch videos:", error);
+            // console.error("Failed to fetch videos:", error);
         } finally {
 
         }
-    };
+    }, [myInfo]);
+
 
     useEffect(() => {
+        setIsFollow(myInfo.is_followed)
+        setFollowCount(myInfo.followers_count);
         fetchVideos();
-    }, [myInfo.id]);
+    }, [fetchVideos, myInfo]);
+    const handleFollow = async () => {
+        if (isLogin == null) {
+            setShowLogin(true);
+            return;
+        }
+        let res;
+        if (isFollow) {
+            res = await unFollowService(myInfo.id);
+            setIsFollow(false);
+            setFollowCount(res.followers_count);
+        } else {
+            res = await followService(myInfo.id);
+            setIsFollow(true);
+            setFollowCount(res.followers_count);
+        }
+    }
+    const handleOpenModalFollowing = () => {
+        if (profile) {
+            return;
+        }
+        setOpenModalFollowing(true);
+    }
 
     return (
         <div className="w-full h-full pt-[32px] px-[24px] pb-[36px]">
@@ -49,7 +81,13 @@ function ProfileUser({ myInfo, profile }) {
                     <div className="flex gap-[12px] items-center">
                         {profile ? (
                             <>
-                                <Button primary>Follow</Button>
+                                {
+                                    isFollow ? (<Button onClick={handleFollow} outline>UnFollow</Button>) : <Button onClick={handleFollow} primary>Follow</Button>
+                                }
+                                {/* <Button
+                                    onClick={handleFollow}
+                                    primary 
+                                >{isFollow ? "UnFollow" : "Follow"}</Button> */}
                                 <Button className="bg-[#f2f2f2] w-[136px] h-[36px] font-semibold hover:bg-[#0000001f] transition-all duration-100 flex justify-center">Message</Button>
                                 <button className="bg-[#f2f2f2] w-[36px] h-[36px] hover:bg-[#0000001f] transition-all duration-100 items-center justify-center flex rounded-[6px]">
                                     <ShareProfile></ShareProfile>
@@ -72,15 +110,16 @@ function ProfileUser({ myInfo, profile }) {
                                 </>
                             )
                         }
-
                     </div>
                     <div className="flex gap-[20px]">
-                        <div className="flex gap-1 items-center">
+                        <div
+                            onClick={handleOpenModalFollowing}
+                            className="flex gap-1 items-center cursor-pointer">
                             <div className="font-bold text-base leading-5">{myInfo.followings_count || 0}</div>
                             <div className="text-base font-normal leading-5 text-[#857a83]">Following</div>
                         </div>
-                        <div className="flex gap-1 items-center">
-                            <div className="font-bold text-base leading-5">{myInfo.followers_count || 0}</div>
+                        <div className="flex gap-1 items-center cursor-pointer">
+                            <div className="font-bold text-base leading-5">{followCount}</div>
                             <div className="text-base font-normal leading-5 text-[#857a83]">Followers</div>
                         </div>
                         <div className="flex gap-1 items-center">
@@ -126,7 +165,7 @@ function ProfileUser({ myInfo, profile }) {
                         (<div className="w-full grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-[30px] justify-items-center mt-5">
                             {videos.map((video) => (
                                 <div className="video-card w-full justify-center flex" key={video.id} >
-                                    <VideoExploreCard video={video}></VideoExploreCard>
+                                    <VideoExploreCard video={video} isLogin={isLogin} showModalLogin={() => setShowLogin(true)} backprofile></VideoExploreCard>
                                 </div>
                             ))}
                         </div>) : (
@@ -142,21 +181,29 @@ function ProfileUser({ myInfo, profile }) {
                 </div>
 
                 <div id="Reposts" className={`${activeCity === 'Reposts' ? '' : 'hidden'}`}>
-                    {/* {profile ?
-                        ( */}
-                    <div className="w-full flex flex-col justify-center items-center mt-16">
-                        <div className="flex justify-center">
-                            <div className="w-[92px] h-[92px] rounded-full bg-[#f8f8f8] flex justify-center items-center">
-                                <NoContentIcon />
-                            </div>
-                        </div>
-                        <span className="text-2xl mt-6 leading-8 display-text font-bold">This user's reposts videos are private</span>
-                        <span>Videos reposts by {myInfo.nickname} are currently hidden</span>
-                    </div>
-                    {/* ) :
+                    {profile ?
                         (
-                            <></>
-                        )} */}
+                            <div className="w-full flex flex-col justify-center items-center mt-16">
+                                <div className="flex justify-center">
+                                    <div className="w-[92px] h-[92px] rounded-full bg-[#f8f8f8] flex justify-center items-center">
+                                        <NoContentIcon />
+                                    </div>
+                                </div>
+                                <span className="text-2xl mt-6 leading-8 display-text font-bold">This user's reposts videos are private</span>
+                                <span>Videos reposts by {myInfo.nickname} are currently hidden</span>
+                            </div>
+                        ) :
+                        (
+                            <div className="w-full flex flex-col justify-center items-center mt-16">
+                                <div className="flex justify-center">
+                                    <div className="w-[92px] h-[92px] rounded-full bg-[#f8f8f8] flex justify-center items-center">
+                                        <NoContentIcon />
+                                    </div>
+                                </div>
+                                <span className="text-2xl mt-6 leading-8 display-text font-bold">No content</span>
+                                <span>This user has not published any videos.</span>
+                            </div>
+                        )}
                 </div>
 
                 <div id="Favorites" className={`${activeCity === 'Favorites' ? '' : 'hidden'}`}>
@@ -171,7 +218,15 @@ function ProfileUser({ myInfo, profile }) {
                             </div>
                         ) :
                         (
-                            <></>
+                            <div className="w-full flex flex-col justify-center items-center mt-16">
+                                <div className="flex justify-center">
+                                    <div className="w-[92px] h-[92px] rounded-full bg-[#f8f8f8] flex justify-center items-center">
+                                        <NoContentIcon />
+                                    </div>
+                                </div>
+                                <span className="text-2xl mt-6 leading-8 display-text font-bold">No content</span>
+                                <span>This user has not published any videos.</span>
+                            </div>
                         )}
                 </div>
                 <div id="Liked" className={`${activeCity === 'Liked' ? '' : 'hidden'}`}>
@@ -184,10 +239,20 @@ function ProfileUser({ myInfo, profile }) {
                             </div>
                         ) :
                         (
-                            <></>
+                            <div className="w-full flex flex-col justify-center items-center mt-16">
+                                <div className="flex justify-center">
+                                    <div className="w-[92px] h-[92px] rounded-full bg-[#f8f8f8] flex justify-center items-center">
+                                        <NoContentIcon />
+                                    </div>
+                                </div>
+                                <span className="text-2xl mt-6 leading-8 display-text font-bold">No content</span>
+                                <span>This user has not published any videos.</span>
+                            </div>
                         )}
                 </div>
             </div>
+            {showLogin && <AuthModal onClose={() => setShowLogin(false)}></AuthModal>}
+            {openModalFollowing && <ModalFollowingAccount onClose={() => setOpenModalFollowing(false)} user={myInfo}></ModalFollowingAccount>}
         </div>
     );
 }

@@ -3,7 +3,7 @@ import { MdClose, MdMoreHoriz, MdOutlineMusicNote } from "react-icons/md";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getVideo } from "~/services/getVideo";
 import Button from "../Button";
-import { CommentIcon, CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
+import { CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, ShareIcon } from "../Icons/Icons";
 import { createComment, getComment, updateComment } from "~/services/comment";
 import CommentItem from "../Comment";
 import noImage from "~/assets/images/noimage.jpg";
@@ -18,6 +18,8 @@ function DetailVideo() {
     const navigate = useNavigate();
     const [commentValue, setCommentValue] = useState("");
     const [editComment, setEditComment] = useState(null);
+    const location = useLocation();
+    const backprofile = location.state;
 
     // console.log("id:", uuid)
 
@@ -44,7 +46,13 @@ function DetailVideo() {
     }, [fetchDetailVideo, fetchComments]);
 
     const handleClose = () => {
-        navigate('/explore')
+        if (backprofile) {
+            const nickname = video.user.nickname;
+            navigate(`/${nickname}`);
+        } else {
+            navigate('/explore')
+        }
+
     }
     const handleInsertComment = async () => {
         try {
@@ -78,6 +86,14 @@ function DetailVideo() {
             console.error("Error toggling like:", error);
         }
     }
+    const handleGetUser = async (nickname) => {
+        try {
+            navigate(`/${nickname}`);
+        } catch (error) {
+            console.log("Error: User not found");
+        }
+    };
+
     return (
         <div className="w-full flex h-screen">
             <div className="w-3/5 bg-black h-full relative">
@@ -102,9 +118,11 @@ function DetailVideo() {
                     {video.user && (
                         <div className="flex justify-between">
                             <div className="flex gap-2">
-                                <img src={avatarUrl} alt="" className="w-[40px] h-[40px] rounded-full" />
+                                <img
+                                    onClick={() => handleGetUser(video.user.nickname)}
+                                    src={avatarUrl} alt="" className="w-[40px] h-[40px] rounded-full" />
                                 <div className="flex flex-col gap-1">
-                                    <div className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
+                                    <div onClick={() => handleGetUser(video.user.nickname)} className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
                                     <div className="text-[14px] text-[#161823] leading-4 text-start">{video.user.first_name + ' ' + video.user.last_name}</div>
                                 </div>
                             </div>
@@ -129,7 +147,7 @@ function DetailVideo() {
                     </div>
                 </div>
                 <div className="w-full px-4">
-                    <div className="w-full h-[32px] border-b-2 border-black font-bold">Comments({video.comments_count})</div>
+                    <div className="w-full h-[32px] border-b-2 border-gray-400 font-bold">Comments({comments.length})</div>
                     <div className="flex flex-col gap-3 h-[400px] overflow-y-auto pt-2">
                         {
                             comments &&
@@ -164,7 +182,7 @@ function DetailVideo() {
                 </div>
 
             </div>
-        </div >
+        </div>
     );
 }
 

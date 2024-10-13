@@ -1,5 +1,5 @@
 import noImage from "~/assets/images/noimage.jpg";
-import { LikedComment, LikedIcon, UnLikeComment } from "../Icons/Icons";
+import { LikedComment, UnLikeComment } from "../Icons/Icons";
 import { MdEditSquare, MdMoreHoriz, MdOutlineDeleteOutline, MdOutlineFlag } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Tippy from '@tippyjs/react/headless';
@@ -139,7 +139,7 @@ function CommentItem({ comment, fetchComments, onEdit }) {
                 >
                     <div className="w-[20px] h-[20px]"> {showMore && <MdMoreHoriz
                         onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}s className="text-[25px] pr-1" />}</div>
+                        onMouseLeave={handleMouseLeave} s className="text-[25px] pr-1" />}</div>
                 </Tippy>
                 <button onClick={handleLikeComment}> {isLiked ? <LikedComment ></LikedComment> : <UnLikeComment></UnLikeComment>}</button>
                 <span className="leading-5 text-base text-[#16182380]">{likeCommentCount}</span>

@@ -6,8 +6,6 @@ const likeVideo = async (id) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
         })
-
-        console.log("like thanh cong", res.data.data);
         return res.data.data
     } catch (error) {
         console.log(error)
@@ -22,7 +20,6 @@ const unLikeVideo = async (id) => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
             })
-        console.log("unlike thanh cong", res.data.data);
 
         return res.data.data
     } catch (error) {

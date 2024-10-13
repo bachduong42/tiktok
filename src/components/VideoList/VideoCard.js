@@ -1,14 +1,14 @@
 import { MdAdd, MdCheck, MdMoreHoriz, MdMusicNote } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "../Image";
-import { CommentIcon, IsLikeIcon, MuteIcon, SaveIcon, ShareIcon, UnLikeIcon, VolumnIcon } from "../Icons/Icons";
+import { MuteIcon, VolumnIcon } from "../Icons/Icons";
 import UserToolTip from "../Popper/UserToolTip";
 import { useNavigate } from "react-router-dom";
 import ModalComment from "../Comment/ModalComment";
-import { likeVideo, unLikeVideo } from "~/services/like";
 import ButtonList from "./ButtonList";
+import { followService, unFollowService } from "~/services/follow";
 
-function VideoCard({ video, onLikeToggle }) {
+function VideoCard({ video, onLikeToggle, isLogin, showModalLogin }) {
     const [volume, setVolume] = useState(0);
     const [showMore, setShowMore] = useState(false);
     const [isHover, setIsHover] = useState(false);
@@ -18,8 +18,7 @@ function VideoCard({ video, onLikeToggle }) {
     const [timeoutId, setTimeoutId] = useState(null);
     const videoRef = useRef(null);
     const navigate = useNavigate();
-    // const [like, setLike] = useState(video.is_liked);
-    // const [countLikes, setCountLikes] = useState(video.likes_count);
+    const [isFollow, setIsFollow] = useState(video.user.is_followed);
 
     const toggleShowMore = () => {
         setShowMore(prev => !prev);
@@ -52,8 +51,11 @@ function VideoCard({ video, onLikeToggle }) {
     };
 
     const toggleModalComment = () => {
+        if (isLogin == null) {
+            showModalLogin();
+            return;
+        }
         setShowModalComment(prev => !prev);
-        console.log(video.is_liked);
     };
     const handleMouseLeave = () => {
         const id = setTimeout(() => {
@@ -68,7 +70,18 @@ function VideoCard({ video, onLikeToggle }) {
         }
         setShowUser(true);
     };
-
+    const handleFollow = async () => {
+        if (isLogin == null) {
+            showModalLogin();
+            return;
+        }
+        if (video.user.is_followed) {
+            await unFollowService(video.user.id);
+        } else {
+            await followService(video.user.id);
+        }
+        setIsFollow(prev => !prev);
+    }
     return (
         <div className="w-[482px] h-[629px] flex gap-6">
             <div
@@ -129,7 +142,7 @@ function VideoCard({ video, onLikeToggle }) {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     className="relative w-[48px] h-[48px] justify-center items-center mb-6">
-                    <UserToolTip video={video} showUser={showUser} handleHideResult={handleHideResult} setShowUser={setShowUser}>
+                    <UserToolTip video={video} showUser={showUser} handleHideResult={handleHideResult} setShowUser={setShowUser} isFollow={isFollow} handleFollow={handleFollow}>
                         <Image
                             onClick={() => handleGetUser(video.user.nickname)}
                             src={video.user.avatar}
@@ -139,23 +152,26 @@ function VideoCard({ video, onLikeToggle }) {
 
                         />
                     </UserToolTip>
-                    {!video.user.is_followed ? (
+                    {!isFollow ? (
                         <button
+                            onClick={handleFollow}
                             className="w-[24px] h-[24px] bg-[#fe2c55] absolute bottom-0 left-1/2 rounded-[90px] flex transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
                             <MdAdd className="w-[20px] h-[20px] text-white justify-center items-center" />
                         </button>
                     ) : (
-                        <button className="w-[24px] h-[24px] bg-white absolute bottom-0 left-1/2 rounded-[90px] flex transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
+                        <button
+                            onClick={handleFollow}
+                            className="w-[24px] h-[24px] bg-white absolute bottom-0 left-1/2 rounded-[90px] flex transform translate-x-[-50%] translate-y-[30%] justify-center items-center">
                             <MdCheck className="w-[20px] h-[20px] text-[#fe2c55] justify-center items-center" />
                         </button>
                     )}
                 </div>
-                <ButtonList video={video} onLikeToggle={onLikeToggle} showModalComment={() => setShowModalComment(true)}></ButtonList>
+                <ButtonList video={video} onLikeToggle={onLikeToggle} showModalComment={toggleModalComment} ></ButtonList>
             </div>
             {showModalComment && (
                 <ModalComment isOpen={showModalComment} onClose={toggleModalComment} video={video} />
-
             )}
+
         </div>
     );
 }

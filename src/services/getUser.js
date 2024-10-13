@@ -15,7 +15,11 @@ const getCurrentUser = async () => {
 
 const getAnUserById = async (id) => {
     try {
-        const res = await httpRequest.get(`/users/@${id}`);
+        const res = await httpRequest.get(`/users/@${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+        });
         return res.data.data;
     } catch (error) {
         console.log(error)
