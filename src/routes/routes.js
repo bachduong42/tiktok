@@ -12,9 +12,11 @@ import DetailUpload from "~/pages/Upload/DetailUpload"
 import Profile from "~/pages/Profile"
 import DetailVideo from "~/components/VideoList/DetailVideo"
 import { Fragment } from "react"
+import Friend from "~/pages/Friend"
 const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.follow, component: Following },
+    { path: config.routes.friend, component: Friend },
     { path: config.routes.myinfo, component: MyProfile },
     { path: config.routes.profile, component: Profile },
     { path: config.routes.live, component: Live },

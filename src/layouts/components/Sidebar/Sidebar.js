@@ -10,6 +10,7 @@ import FollowingAccounts from "~/components/FollowingAccounts";
 import { useContext, useState } from "react";
 import { UserContext } from "~/contexts/UserContext";
 import AuthModal from "~/components/Authentication";
+import { FriendIcon, FriendIconActive } from "~/components/Icons/Icons";
 
 function Sidebar() {
     const { user } = useContext(UserContext)
@@ -29,15 +30,7 @@ function Sidebar() {
                         activeIcon={<FollowingIconActive />}
 
                     /> : <></>}
-                    <MenuItem title="Friend" to={config.routes.friend} icon={<ExploreIcon></ExploreIcon>} activeIcon={<ExploreIconActive></ExploreIconActive>}></MenuItem>
-                    {/* <MenuItem
-                        title="Profile"
-                        to={config.routes.myinfo}
-                        icon={<ProfileIcon />}
-                        activeIcon={<ProfileIcon />}
-                        user={user}
-                        
-                    /> */}
+                    <MenuItem title="Friend" to={config.routes.friend} icon={<FriendIcon></FriendIcon>} activeIcon={<FriendIconActive></FriendIconActive>}></MenuItem>
                     {user ? <MenuItem
                         title="Profile"
                         to={config.routes.myinfo}
