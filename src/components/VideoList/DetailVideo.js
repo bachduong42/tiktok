@@ -119,26 +119,6 @@ function DetailVideo() {
                 </div>
                 <div className="flex justify-between  py-4 pl-8">
                     <ButtonList video={video} onLikeToggle={() => onLikeToggle(video.id, video.is_liked)} detail className></ButtonList>
-                    {/* <div className="flex flex-row gap-5">
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                {video.is_liked ? <IsLikeIcon width="17px" height="17px"></IsLikeIcon> : <UnLikeIcon width="17px" height="17px" />}
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
-                        </div>
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                <CommentIcon width="17px" height="17px"></CommentIcon>
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">{video.comments_count}</span>
-                        </div>
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                <SaveIcon width="17px" height="17px"></SaveIcon>
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">0</span>
-                        </div>
-                    </div> */}
                     <div className="flex flex-row gap-2 items-center">
                         <IconDetailVideo1></IconDetailVideo1>
                         <IconDetailVideo2></IconDetailVideo2>

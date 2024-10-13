@@ -151,43 +151,6 @@ function VideoCard({ video, onLikeToggle }) {
                     )}
                 </div>
                 <ButtonList video={video} onLikeToggle={onLikeToggle} showModalComment={() => setShowModalComment(true)}></ButtonList>
-                {/* <div className="flex flex-col mb-2">
-                    {video.is_liked ? (
-                        <button
-                            onClick={onLikeToggle}
-                            className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                            <IsLikeIcon width="24px" height="24px" />
-                        </button>
-                    ) :
-                        (
-                            <button
-                                onClick={onLikeToggle}
-                                className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                <UnLikeIcon width="24px" height="24px" />
-                            </button>
-                        )}
-                    <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
-                </div>
-                <div className="flex flex-col mb-2">
-                    <button
-                        onClick={() => setShowModalComment(true)}
-                        className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <CommentIcon width="35px" height="35px" className="text-[21px]" />
-                    </button>
-                    <span className="text-xs leading-4 text-[#161823bf]">{video.comments_count}</span>
-                </div>
-                <div className="flex flex-col mb-2">
-                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <SaveIcon width="24px" height="24px" className="text-[21px]" />
-                    </button>
-                    <span className="text-xs leading-4 text-[#161823bf]">0</span>
-                </div>
-                <div className="flex flex-col">
-                    <button className="w-[48px] h-[48px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                        <ShareIcon width="24px" height="24px" className="text-[21px]" />
-                    </button>
-                    <span className="text-xs leading-4 text-[#161823bf]">0</span>
-                </div> */}
             </div>
             {showModalComment && (
                 <ModalComment isOpen={showModalComment} onClose={toggleModalComment} video={video} />
