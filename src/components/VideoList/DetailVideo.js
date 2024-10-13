@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { MdClose, MdMoreHoriz, MdOutlineMusicNote } from "react-icons/md";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getVideo } from "~/services/getVideo";
 import Button from "../Button";
 import { CommentIcon, CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
 import { createComment, getComment, updateComment } from "~/services/comment";
 import CommentItem from "../Comment";
 import noImage from "~/assets/images/noimage.jpg";
+import ButtonList from "./ButtonList";
+import { likeVideo, unLikeVideo } from "~/services/like";
 
 function DetailVideo() {
     const { uuid } = useParams();
@@ -16,14 +18,16 @@ function DetailVideo() {
     const navigate = useNavigate();
     const [commentValue, setCommentValue] = useState("");
     const [editComment, setEditComment] = useState(null);
+
     // console.log("id:", uuid)
 
     const fetchDetailVideo = useCallback(async () => {
         setLoading(true)
         const videoData = await getVideo(uuid);
-        setVideo(videoData);
+        setVideo(videoData.data);
         setLoading(false)
     }, [uuid]);
+
     const avatarUrl = (video.user && video.user.avatar === "https://files.fullstack.edu.vn/f8-tiktok/")
         ? noImage
         : (video.user ? video.user.avatar : noImage);
@@ -61,7 +65,19 @@ function DetailVideo() {
         setEditComment(comment);
         setCommentValue(comment.comment);
     };
-
+    const onLikeToggle = async (videoId, isLiked) => {
+        try {
+            let updatedVideo;
+            if (isLiked) {
+                updatedVideo = await unLikeVideo(videoId);
+            } else {
+                updatedVideo = await likeVideo(videoId);
+            }
+            setVideo(updatedVideo);
+        } catch (error) {
+            console.error("Error toggling like:", error);
+        }
+    }
     return (
         <div className="w-full flex h-screen">
             <div className="w-3/5 bg-black h-full relative">
@@ -102,7 +118,8 @@ function DetailVideo() {
                     </div>
                 </div>
                 <div className="flex justify-between  py-4 pl-8">
-                    <div className="flex flex-row gap-5">
+                    <ButtonList video={video} onLikeToggle={() => onLikeToggle(video.id, video.is_liked)} detail className></ButtonList>
+                    {/* <div className="flex flex-row gap-5">
                         <div className="flex flex-row mb-2 items-center gap-1">
                             <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
                                 {video.is_liked ? <IsLikeIcon width="17px" height="17px"></IsLikeIcon> : <UnLikeIcon width="17px" height="17px" />}
@@ -121,7 +138,7 @@ function DetailVideo() {
                             </button>
                             <span className="text-xs leading-4 text-[#161823bf]">0</span>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex flex-row gap-2 items-center">
                         <IconDetailVideo1></IconDetailVideo1>
                         <IconDetailVideo2></IconDetailVideo2>
@@ -167,7 +184,7 @@ function DetailVideo() {
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 }
 

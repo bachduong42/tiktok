@@ -13,6 +13,7 @@ function UserToolTip({ video, children, showUser, handleHideResult }) {
             console.log("Lỗi không tìm thấy người dùng");
         }
     }
+
     return (
         <Tippy
             onClickOutside={handleHideResult}
