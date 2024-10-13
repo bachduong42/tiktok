@@ -22,8 +22,22 @@ function Sidebar() {
                 <Menu>
                     <MenuItem title="For You" to={config.routes.home} icon={<HomeIcon></HomeIcon>} activeIcon={<HomeIconActive></HomeIconActive>}></MenuItem>
                     <MenuItem title="Explore" to={config.routes.explore} icon={<ExploreIcon></ExploreIcon>} activeIcon={<ExploreIconActive></ExploreIconActive>}></MenuItem>
-                    <MenuItem title="Following" to={config.routes.follow} icon={<FollowingIcon></FollowingIcon>} activeIcon={<FollowingIconActive></FollowingIconActive>}></MenuItem>
-                    <MenuItem title="Live" to={config.routes.live} icon={<LiveIcon></LiveIcon>} activeIcon={<LiveIconActive></LiveIconActive>}></MenuItem>
+                    {user ? <MenuItem
+                        title="Following"
+                        to={config.routes.follow}
+                        icon={<FollowingIcon />}
+                        activeIcon={<FollowingIconActive />}
+
+                    /> : <></>}
+                    <MenuItem title="Friend" to={config.routes.friend} icon={<ExploreIcon></ExploreIcon>} activeIcon={<ExploreIconActive></ExploreIconActive>}></MenuItem>
+                    {/* <MenuItem
+                        title="Profile"
+                        to={config.routes.myinfo}
+                        icon={<ProfileIcon />}
+                        activeIcon={<ProfileIcon />}
+                        user={user}
+                        
+                    /> */}
                     {user ? <MenuItem
                         title="Profile"
                         to={config.routes.myinfo}
@@ -33,9 +47,10 @@ function Sidebar() {
                     /> : <></>}
                 </Menu>
                 <hr className="my-3" />
+                <FollowingAccounts label="Suggested Accounts"></FollowingAccounts>
                 {user ? (
 
-                    <FollowingAccounts label="Suggested Accounts"></FollowingAccounts>
+                    <></>
 
                 ) :
                     <div className="hidden lg:flex flex-col  w-[208px] px-2 gap-3 ">

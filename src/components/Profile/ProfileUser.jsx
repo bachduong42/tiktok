@@ -25,11 +25,10 @@ function ProfileUser({ myInfo, profile }) {
     const handleChangeTab = (cityName) => {
         setActiveCity(cityName);
     }
-    // console.log(myInfo);
     const fetchVideos = useCallback(async () => {
         try {
             const videoData = await getUserVideos(myInfo.id);
-            setVideos(videoData.data);
+            setVideos(videoData);
         } catch (error) {
             // console.error("Failed to fetch videos:", error);
         } finally {

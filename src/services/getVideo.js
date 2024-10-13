@@ -19,8 +19,12 @@ const getVideoList = async (typePath, page) => {
 
 const getUserVideos = async (id) => {
     try {
-        const res = await httpRequest.get(`users/${id}/videos`)
-        return res.data
+        const res = await httpRequest.get(`users/${id}/videos`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        return res.data.data
     } catch (error) {
         console.log(error)
         throw error
