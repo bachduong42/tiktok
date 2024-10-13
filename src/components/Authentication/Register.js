@@ -57,13 +57,13 @@ function Register({ onClose, onToggle }) {
             if (error.response && error.response.data) {
                 const { errors } = error.response.data;
                 if (errors && errors["Auth.InvalidCredentials"]) {
-                    toast.error("Đăng ký thất bại, vui lòng thử lại", {
+                    toast.error("Email đã tồn tại !!!", {
                         autoClose: 1000
                     });
                 } else {
                     console.error("Error during signup:", error.response ? error.response.data : error.message);
 
-                    toast.error("Đăng ký thất bại, vui lòng thử lại", {
+                    toast.error("Email đã tồn tại !!!", {
                         autoClose: 1000
                     });
                 }
