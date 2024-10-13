@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import { getCurrentUser } from "~/services/getUser";
+import { useContext, useEffect, useState } from "react";
+import { getAnUserById } from "~/services/getUser";
 import ProfileUser from "~/components/Profile";
+import { UserContext } from "~/contexts/UserContext";
 function MyProfile() {
     const [myInfo, setMyInfo] = useState({});
-
+    const { user } = useContext(UserContext);
+    // console.log(user);
     useEffect(() => {
-        const fetchApi = async () => {
-            const result = await getCurrentUser();
-            if (result) {
-                setMyInfo(result);
-            }
-        };
-        fetchApi();
-    }, []);
+        if (user) {
+            const fetchApi = async () => {
+                const result = await getAnUserById(user.nickname);
+                if (result) {
+                    setMyInfo(result);
+                }
+            };
+            fetchApi();
+        }
+    }, [user]);
     return (
-        // <>helo</>
         <ProfileUser myInfo={myInfo} ></ProfileUser>
     );
 }

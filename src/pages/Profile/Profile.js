@@ -10,7 +10,6 @@ function Profile() {
     useEffect(() => {
         const fetchApi = async () => {
             const result = await getAnUserById(nickname);
-            // console.log(result)
             if (result) {
                 setProfile(result);
             }

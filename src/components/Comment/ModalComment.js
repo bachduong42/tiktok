@@ -48,7 +48,7 @@ function ModalComment({ isOpen, onClose, video }) {
         <div className="fixed inset-0 flex items-center justify-end">
             <div className="bg-white w-96 h-screen p-4 mt-[100px] max-w-[600px] border-gray-300 border-2 flex flex-col z-10 transition-all duration-150">
                 <div className="flex w-full justify-between ">
-                    <h2 className="text-lg flex gap-1"><b>Bình luận</b>({video.comments_count})</h2>
+                    <h2 className="text-lg flex gap-1"><b>Bình luận</b>({comments.length})</h2>
                     <button onClick={onClose} className="w-[20px] h-[20px] flex items-center justify-center"><MdClose className="text-black text-[20px] font-bold" /></button>
                 </div>
                 <div className="flex flex-col gap-3 h-[550px] overflow-y-auto pt-2 ">

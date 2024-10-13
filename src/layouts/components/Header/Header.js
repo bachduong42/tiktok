@@ -100,12 +100,12 @@ function Header() {
         {
             icon: <AiFillTikTok />,
             title: "Get coins",
-            to: '/coins'
+            // to: '/coins'
         },
         {
             icon: <MdIcon.MdOutlineSettings />,
             title: "Settings",
-            to: '/settings'
+            // to: '/settings'
 
         },
         ...MENU_ITEM,

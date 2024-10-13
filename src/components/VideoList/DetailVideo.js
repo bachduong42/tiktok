@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { MdClose, MdMoreHoriz, MdOutlineMusicNote } from "react-icons/md";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getVideo } from "~/services/getVideo";
 import Button from "../Button";
-import { CommentIcon, CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, IsLikeIcon, SaveIcon, ShareIcon, UnLikeIcon } from "../Icons/Icons";
+import { CommentIcon1, CommentIcon2, IconDetailVideo1, IconDetailVideo2, IconDetailVideo3, IconDetailVideo4, IconDetailVideo5, ShareIcon } from "../Icons/Icons";
 import { createComment, getComment, updateComment } from "~/services/comment";
 import CommentItem from "../Comment";
 import noImage from "~/assets/images/noimage.jpg";
+import ButtonList from "./ButtonList";
+import { likeVideo, unLikeVideo } from "~/services/like";
 
 function DetailVideo() {
     const { uuid } = useParams();
@@ -16,14 +18,18 @@ function DetailVideo() {
     const navigate = useNavigate();
     const [commentValue, setCommentValue] = useState("");
     const [editComment, setEditComment] = useState(null);
+    const location = useLocation();
+    const backprofile = location.state;
+
     // console.log("id:", uuid)
 
     const fetchDetailVideo = useCallback(async () => {
         setLoading(true)
         const videoData = await getVideo(uuid);
-        setVideo(videoData);
+        setVideo(videoData.data);
         setLoading(false)
     }, [uuid]);
+
     const avatarUrl = (video.user && video.user.avatar === "https://files.fullstack.edu.vn/f8-tiktok/")
         ? noImage
         : (video.user ? video.user.avatar : noImage);
@@ -40,7 +46,13 @@ function DetailVideo() {
     }, [fetchDetailVideo, fetchComments]);
 
     const handleClose = () => {
-        navigate('/explore')
+        if (backprofile) {
+            const nickname = video.user.nickname;
+            navigate(`/${nickname}`);
+        } else {
+            navigate('/explore')
+        }
+
     }
     const handleInsertComment = async () => {
         try {
@@ -60,6 +72,26 @@ function DetailVideo() {
     const handleEditComment = (comment) => {
         setEditComment(comment);
         setCommentValue(comment.comment);
+    };
+    const onLikeToggle = async (videoId, isLiked) => {
+        try {
+            let updatedVideo;
+            if (isLiked) {
+                updatedVideo = await unLikeVideo(videoId);
+            } else {
+                updatedVideo = await likeVideo(videoId);
+            }
+            setVideo(updatedVideo);
+        } catch (error) {
+            console.error("Error toggling like:", error);
+        }
+    }
+    const handleGetUser = async (nickname) => {
+        try {
+            navigate(`/${nickname}`);
+        } catch (error) {
+            console.log("Error: User not found");
+        }
     };
 
     return (
@@ -86,9 +118,11 @@ function DetailVideo() {
                     {video.user && (
                         <div className="flex justify-between">
                             <div className="flex gap-2">
-                                <img src={avatarUrl} alt="" className="w-[40px] h-[40px] rounded-full" />
+                                <img
+                                    onClick={() => handleGetUser(video.user.nickname)}
+                                    src={avatarUrl} alt="" className="w-[40px] h-[40px] rounded-full" />
                                 <div className="flex flex-col gap-1">
-                                    <div className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
+                                    <div onClick={() => handleGetUser(video.user.nickname)} className="font-bold text-[20px] text-start display-text leading-5 ">{video.user.nickname}</div>
                                     <div className="text-[14px] text-[#161823] leading-4 text-start">{video.user.first_name + ' ' + video.user.last_name}</div>
                                 </div>
                             </div>
@@ -102,26 +136,7 @@ function DetailVideo() {
                     </div>
                 </div>
                 <div className="flex justify-between  py-4 pl-8">
-                    <div className="flex flex-row gap-5">
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                {video.is_liked ? <IsLikeIcon width="17px" height="17px"></IsLikeIcon> : <UnLikeIcon width="17px" height="17px" />}
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">{video.likes_count}</span>
-                        </div>
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                <CommentIcon width="17px" height="17px"></CommentIcon>
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">{video.comments_count}</span>
-                        </div>
-                        <div className="flex flex-row mb-2 items-center gap-1">
-                            <button className="w-[30px] h-[30px] bg-[#1618230f] rounded-[90px] items-center flex justify-center">
-                                <SaveIcon width="17px" height="17px"></SaveIcon>
-                            </button>
-                            <span className="text-xs leading-4 text-[#161823bf]">0</span>
-                        </div>
-                    </div>
+                    <ButtonList video={video} onLikeToggle={() => onLikeToggle(video.id, video.is_liked)} detail className></ButtonList>
                     <div className="flex flex-row gap-2 items-center">
                         <IconDetailVideo1></IconDetailVideo1>
                         <IconDetailVideo2></IconDetailVideo2>
@@ -132,7 +147,7 @@ function DetailVideo() {
                     </div>
                 </div>
                 <div className="w-full px-4">
-                    <div className="w-full h-[32px] border-b-2 border-black font-bold">Comments({video.comments_count})</div>
+                    <div className="w-full h-[32px] border-b-2 border-gray-400 font-bold">Comments({comments.length})</div>
                     <div className="flex flex-col gap-3 h-[400px] overflow-y-auto pt-2">
                         {
                             comments &&

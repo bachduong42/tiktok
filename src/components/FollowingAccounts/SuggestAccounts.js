@@ -63,7 +63,6 @@ function FollowingAccounts({ label }) {
             ) : (
                 <p className="text-gray-500 mt-2">No more accounts</p>
             )}
-            {/* <p className='text-[#fe2c55] font-semibold text-[14px] leading-[18px]  cursor-pointer mt-2'>See all</p> */}
         </div>
     );
 }

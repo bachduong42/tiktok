@@ -11,7 +11,6 @@ export const UserProvider = ({ children }) => {
     const login = (user) => {
         setUser(user);
         localStorage.setItem('isLogin', true);
-
     }
     const logout = () => {
         setUser(null);
